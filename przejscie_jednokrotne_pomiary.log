@@ -1,0 +1,254 @@
+wyszukiwanie najwiekszej i drugiej najwiekszej liczby na niepoindexowanym 
+zbiorze 6.000.000 liczb rzeczywistych
+druga metoda to przeszukanie wszystkich elementow porownujec je ze soba.
+Odcinek 1; pomiar 1; Czas startu wyszukiwania: 12/05/2020 11:32:38:163000000
+Pierwsza najwieksza liczba to: 199999875,322807285347445717993027793318
+Druga najwieksza liczba to: 199999793,770128165144952629982286556177
+czas zakonczenia wyszukiwania: 12/05/2020 11:32:42:879000000
+Odcinek 1; pomiar 1; Czas trwania wyszukiwania: +000000 00:00:04.716000000
+Odcinek 1; pomiar 2; Czas startu wyszukiwania: 12/05/2020 11:32:42:879000000
+Pierwsza najwieksza liczba to: 199999875,322807285347445717993027793318
+Druga najwieksza liczba to: 199999793,770128165144952629982286556177
+czas zakonczenia wyszukiwania: 12/05/2020 11:32:46:762000000
+Odcinek 1; pomiar 2; Czas trwania wyszukiwania: +000000 00:00:03.883000000
+Odcinek 1; pomiar 3; Czas startu wyszukiwania: 12/05/2020 11:32:46:762000000
+Pierwsza najwieksza liczba to: 199999875,322807285347445717993027793318
+Druga najwieksza liczba to: 199999793,770128165144952629982286556177
+czas zakonczenia wyszukiwania: 12/05/2020 11:32:50:728000000
+Odcinek 1; pomiar 3; Czas trwania wyszukiwania: +000000 00:00:03.966000000
+Odcinek 1; pomiar 4; Czas startu wyszukiwania: 12/05/2020 11:32:50:728000000
+Pierwsza najwieksza liczba to: 199999875,322807285347445717993027793318
+Druga najwieksza liczba to: 199999793,770128165144952629982286556177
+czas zakonczenia wyszukiwania: 12/05/2020 11:32:54:686000000
+Odcinek 1; pomiar 4; Czas trwania wyszukiwania: +000000 00:00:03.958000000
+Odcinek 1; pomiar 5; Czas startu wyszukiwania: 12/05/2020 11:32:54:686000000
+Pierwsza najwieksza liczba to: 199999875,322807285347445717993027793318
+Druga najwieksza liczba to: 199999793,770128165144952629982286556177
+czas zakonczenia wyszukiwania: 12/05/2020 11:32:58:609000000
+Odcinek 1; pomiar 5; Czas trwania wyszukiwania: +000000 00:00:03.923000000
+Odcinek 1; pomiar 6; Czas startu wyszukiwania: 12/05/2020 11:32:58:609000000
+Pierwsza najwieksza liczba to: 199999875,322807285347445717993027793318
+Druga najwieksza liczba to: 199999793,770128165144952629982286556177
+czas zakonczenia wyszukiwania: 12/05/2020 11:33:02:594000000
+Odcinek 1; pomiar 6; Czas trwania wyszukiwania: +000000 00:00:03.985000000
+Odcinek 1; pomiar 7; Czas startu wyszukiwania: 12/05/2020 11:33:02:594000000
+Pierwsza najwieksza liczba to: 199999875,322807285347445717993027793318
+Druga najwieksza liczba to: 199999793,770128165144952629982286556177
+czas zakonczenia wyszukiwania: 12/05/2020 11:33:06:428000000
+Odcinek 1; pomiar 7; Czas trwania wyszukiwania: +000000 00:00:03.834000000
+Odcinek 1; pomiar 8; Czas startu wyszukiwania: 12/05/2020 11:33:06:428000000
+Pierwsza najwieksza liczba to: 199999875,322807285347445717993027793318
+Druga najwieksza liczba to: 199999793,770128165144952629982286556177
+czas zakonczenia wyszukiwania: 12/05/2020 11:33:10:408000000
+Odcinek 1; pomiar 8; Czas trwania wyszukiwania: +000000 00:00:03.980000000
+Odcinek 1; pomiar 9; Czas startu wyszukiwania: 12/05/2020 11:33:10:408000000
+Pierwsza najwieksza liczba to: 199999875,322807285347445717993027793318
+Druga najwieksza liczba to: 199999793,770128165144952629982286556177
+czas zakonczenia wyszukiwania: 12/05/2020 11:33:14:878000000
+Odcinek 1; pomiar 9; Czas trwania wyszukiwania: +000000 00:00:04.470000000
+Odcinek 1; pomiar 10; Czas startu wyszukiwania: 12/05/2020 11:33:14:878000000
+Pierwsza najwieksza liczba to: 199999875,322807285347445717993027793318
+Druga najwieksza liczba to: 199999793,770128165144952629982286556177
+czas zakonczenia wyszukiwania: 12/05/2020 11:33:18:729000000
+Odcinek 1; pomiar 10; Czas trwania wyszukiwania: +000000 00:00:03.851000000
+Odcinek 2; pomiar 1; Czas startu wyszukiwania: 12/05/2020 11:33:18:729000000
+Pierwsza najwieksza liczba to: 199999912,021777984515448405564868455803
+Druga najwieksza liczba to: 199999876,985771262328025489547595436749
+czas zakonczenia wyszukiwania: 12/05/2020 11:33:22:897000000
+Odcinek 2; pomiar 1; Czas trwania wyszukiwania: +000000 00:00:04.168000000
+Odcinek 2; pomiar 2; Czas startu wyszukiwania: 12/05/2020 11:33:22:897000000
+Pierwsza najwieksza liczba to: 199999912,021777984515448405564868455803
+Druga najwieksza liczba to: 199999876,985771262328025489547595436749
+czas zakonczenia wyszukiwania: 12/05/2020 11:33:27:037000000
+Odcinek 2; pomiar 2; Czas trwania wyszukiwania: +000000 00:00:04.140000000
+Odcinek 2; pomiar 3; Czas startu wyszukiwania: 12/05/2020 11:33:27:037000000
+Pierwsza najwieksza liczba to: 199999912,021777984515448405564868455803
+Druga najwieksza liczba to: 199999876,985771262328025489547595436749
+czas zakonczenia wyszukiwania: 12/05/2020 11:33:31:437000000
+Odcinek 2; pomiar 3; Czas trwania wyszukiwania: +000000 00:00:04.400000000
+Odcinek 2; pomiar 4; Czas startu wyszukiwania: 12/05/2020 11:33:31:437000000
+Pierwsza najwieksza liczba to: 199999912,021777984515448405564868455803
+Druga najwieksza liczba to: 199999876,985771262328025489547595436749
+czas zakonczenia wyszukiwania: 12/05/2020 11:33:35:561000000
+Odcinek 2; pomiar 4; Czas trwania wyszukiwania: +000000 00:00:04.124000000
+Odcinek 2; pomiar 5; Czas startu wyszukiwania: 12/05/2020 11:33:35:561000000
+Pierwsza najwieksza liczba to: 199999912,021777984515448405564868455803
+Druga najwieksza liczba to: 199999876,985771262328025489547595436749
+czas zakonczenia wyszukiwania: 12/05/2020 11:33:39:727000000
+Odcinek 2; pomiar 5; Czas trwania wyszukiwania: +000000 00:00:04.166000000
+Odcinek 2; pomiar 6; Czas startu wyszukiwania: 12/05/2020 11:33:39:727000000
+Pierwsza najwieksza liczba to: 199999912,021777984515448405564868455803
+Druga najwieksza liczba to: 199999876,985771262328025489547595436749
+czas zakonczenia wyszukiwania: 12/05/2020 11:33:43:827000000
+Odcinek 2; pomiar 6; Czas trwania wyszukiwania: +000000 00:00:04.100000000
+Odcinek 2; pomiar 7; Czas startu wyszukiwania: 12/05/2020 11:33:43:827000000
+Pierwsza najwieksza liczba to: 199999912,021777984515448405564868455803
+Druga najwieksza liczba to: 199999876,985771262328025489547595436749
+czas zakonczenia wyszukiwania: 12/05/2020 11:33:48:061000000
+Odcinek 2; pomiar 7; Czas trwania wyszukiwania: +000000 00:00:04.234000000
+Odcinek 2; pomiar 8; Czas startu wyszukiwania: 12/05/2020 11:33:48:061000000
+Pierwsza najwieksza liczba to: 199999912,021777984515448405564868455803
+Druga najwieksza liczba to: 199999876,985771262328025489547595436749
+czas zakonczenia wyszukiwania: 12/05/2020 11:33:52:230000000
+Odcinek 2; pomiar 8; Czas trwania wyszukiwania: +000000 00:00:04.169000000
+Odcinek 2; pomiar 9; Czas startu wyszukiwania: 12/05/2020 11:33:52:230000000
+Pierwsza najwieksza liczba to: 199999912,021777984515448405564868455803
+Druga najwieksza liczba to: 199999876,985771262328025489547595436749
+czas zakonczenia wyszukiwania: 12/05/2020 11:33:56:510000000
+Odcinek 2; pomiar 9; Czas trwania wyszukiwania: +000000 00:00:04.280000000
+Odcinek 2; pomiar 10; Czas startu wyszukiwania: 12/05/2020 11:33:56:510000000
+Pierwsza najwieksza liczba to: 199999912,021777984515448405564868455803
+Druga najwieksza liczba to: 199999876,985771262328025489547595436749
+czas zakonczenia wyszukiwania: 12/05/2020 11:34:00:662000000
+Odcinek 2; pomiar 10; Czas trwania wyszukiwania: +000000 00:00:04.152000000
+Odcinek 3; pomiar 1; Czas startu wyszukiwania: 12/05/2020 11:34:00:663000000
+Pierwsza najwieksza liczba to: 199999976,822144220123443734744297061817
+Druga najwieksza liczba to: 199999957,518477178546704695246631236513
+czas zakonczenia wyszukiwania: 12/05/2020 11:34:04:895000000
+Odcinek 3; pomiar 1; Czas trwania wyszukiwania: +000000 00:00:04.232000000
+Odcinek 3; pomiar 2; Czas startu wyszukiwania: 12/05/2020 11:34:04:895000000
+Pierwsza najwieksza liczba to: 199999976,822144220123443734744297061817
+Druga najwieksza liczba to: 199999957,518477178546704695246631236513
+czas zakonczenia wyszukiwania: 12/05/2020 11:34:09:144000000
+Odcinek 3; pomiar 2; Czas trwania wyszukiwania: +000000 00:00:04.249000000
+Odcinek 3; pomiar 3; Czas startu wyszukiwania: 12/05/2020 11:34:09:144000000
+Pierwsza najwieksza liczba to: 199999976,822144220123443734744297061817
+Druga najwieksza liczba to: 199999957,518477178546704695246631236513
+czas zakonczenia wyszukiwania: 12/05/2020 11:34:13:363000000
+Odcinek 3; pomiar 3; Czas trwania wyszukiwania: +000000 00:00:04.219000000
+Odcinek 3; pomiar 4; Czas startu wyszukiwania: 12/05/2020 11:34:13:363000000
+Pierwsza najwieksza liczba to: 199999976,822144220123443734744297061817
+Druga najwieksza liczba to: 199999957,518477178546704695246631236513
+czas zakonczenia wyszukiwania: 12/05/2020 11:34:17:563000000
+Odcinek 3; pomiar 4; Czas trwania wyszukiwania: +000000 00:00:04.200000000
+Odcinek 3; pomiar 5; Czas startu wyszukiwania: 12/05/2020 11:34:17:563000000
+Pierwsza najwieksza liczba to: 199999976,822144220123443734744297061817
+Druga najwieksza liczba to: 199999957,518477178546704695246631236513
+czas zakonczenia wyszukiwania: 12/05/2020 11:34:21:692000000
+Odcinek 3; pomiar 5; Czas trwania wyszukiwania: +000000 00:00:04.129000000
+Odcinek 3; pomiar 6; Czas startu wyszukiwania: 12/05/2020 11:34:21:692000000
+Pierwsza najwieksza liczba to: 199999976,822144220123443734744297061817
+Druga najwieksza liczba to: 199999957,518477178546704695246631236513
+czas zakonczenia wyszukiwania: 12/05/2020 11:34:25:947000000
+Odcinek 3; pomiar 6; Czas trwania wyszukiwania: +000000 00:00:04.255000000
+Odcinek 3; pomiar 7; Czas startu wyszukiwania: 12/05/2020 11:34:25:955000000
+Pierwsza najwieksza liczba to: 199999976,822144220123443734744297061817
+Druga najwieksza liczba to: 199999957,518477178546704695246631236513
+czas zakonczenia wyszukiwania: 12/05/2020 11:34:30:138000000
+Odcinek 3; pomiar 7; Czas trwania wyszukiwania: +000000 00:00:04.183000000
+Odcinek 3; pomiar 8; Czas startu wyszukiwania: 12/05/2020 11:34:30:138000000
+Pierwsza najwieksza liczba to: 199999976,822144220123443734744297061817
+Druga najwieksza liczba to: 199999957,518477178546704695246631236513
+czas zakonczenia wyszukiwania: 12/05/2020 11:34:34:305000000
+Odcinek 3; pomiar 8; Czas trwania wyszukiwania: +000000 00:00:04.167000000
+Odcinek 3; pomiar 9; Czas startu wyszukiwania: 12/05/2020 11:34:34:305000000
+Pierwsza najwieksza liczba to: 199999976,822144220123443734744297061817
+Druga najwieksza liczba to: 199999957,518477178546704695246631236513
+czas zakonczenia wyszukiwania: 12/05/2020 11:34:38:596000000
+Odcinek 3; pomiar 9; Czas trwania wyszukiwania: +000000 00:00:04.291000000
+Odcinek 3; pomiar 10; Czas startu wyszukiwania: 12/05/2020 11:34:38:596000000
+Pierwsza najwieksza liczba to: 199999976,822144220123443734744297061817
+Druga najwieksza liczba to: 199999957,518477178546704695246631236513
+czas zakonczenia wyszukiwania: 12/05/2020 11:34:42:943000000
+Odcinek 3; pomiar 10; Czas trwania wyszukiwania: +000000 00:00:04.347000000
+Odcinek 4; pomiar 1; Czas startu wyszukiwania: 12/05/2020 11:34:42:943000000
+Pierwsza najwieksza liczba to: 199999582,249948424736515541532377843466
+Druga najwieksza liczba to: 199999574,338218616054572039474142987711
+czas zakonczenia wyszukiwania: 12/05/2020 11:34:47:127000000
+Odcinek 4; pomiar 1; Czas trwania wyszukiwania: +000000 00:00:04.184000000
+Odcinek 4; pomiar 2; Czas startu wyszukiwania: 12/05/2020 11:34:47:127000000
+Pierwsza najwieksza liczba to: 199999582,249948424736515541532377843466
+Druga najwieksza liczba to: 199999574,338218616054572039474142987711
+czas zakonczenia wyszukiwania: 12/05/2020 11:34:51:377000000
+Odcinek 4; pomiar 2; Czas trwania wyszukiwania: +000000 00:00:04.250000000
+Odcinek 4; pomiar 3; Czas startu wyszukiwania: 12/05/2020 11:34:51:377000000
+Pierwsza najwieksza liczba to: 199999582,249948424736515541532377843466
+Druga najwieksza liczba to: 199999574,338218616054572039474142987711
+czas zakonczenia wyszukiwania: 12/05/2020 11:34:55:528000000
+Odcinek 4; pomiar 3; Czas trwania wyszukiwania: +000000 00:00:04.151000000
+Odcinek 4; pomiar 4; Czas startu wyszukiwania: 12/05/2020 11:34:55:528000000
+Pierwsza najwieksza liczba to: 199999582,249948424736515541532377843466
+Druga najwieksza liczba to: 199999574,338218616054572039474142987711
+czas zakonczenia wyszukiwania: 12/05/2020 11:34:59:690000000
+Odcinek 4; pomiar 4; Czas trwania wyszukiwania: +000000 00:00:04.162000000
+Odcinek 4; pomiar 5; Czas startu wyszukiwania: 12/05/2020 11:34:59:690000000
+Pierwsza najwieksza liczba to: 199999582,249948424736515541532377843466
+Druga najwieksza liczba to: 199999574,338218616054572039474142987711
+czas zakonczenia wyszukiwania: 12/05/2020 11:35:06:381000000
+Odcinek 4; pomiar 5; Czas trwania wyszukiwania: +000000 00:00:06.691000000
+Odcinek 4; pomiar 6; Czas startu wyszukiwania: 12/05/2020 11:35:06:381000000
+Pierwsza najwieksza liczba to: 199999582,249948424736515541532377843466
+Druga najwieksza liczba to: 199999574,338218616054572039474142987711
+czas zakonczenia wyszukiwania: 12/05/2020 11:35:12:278000000
+Odcinek 4; pomiar 6; Czas trwania wyszukiwania: +000000 00:00:05.897000000
+Odcinek 4; pomiar 7; Czas startu wyszukiwania: 12/05/2020 11:35:12:278000000
+Pierwsza najwieksza liczba to: 199999582,249948424736515541532377843466
+Druga najwieksza liczba to: 199999574,338218616054572039474142987711
+czas zakonczenia wyszukiwania: 12/05/2020 11:35:16:445000000
+Odcinek 4; pomiar 7; Czas trwania wyszukiwania: +000000 00:00:04.167000000
+Odcinek 4; pomiar 8; Czas startu wyszukiwania: 12/05/2020 11:35:16:445000000
+Pierwsza najwieksza liczba to: 199999582,249948424736515541532377843466
+Druga najwieksza liczba to: 199999574,338218616054572039474142987711
+czas zakonczenia wyszukiwania: 12/05/2020 11:35:20:785000000
+Odcinek 4; pomiar 8; Czas trwania wyszukiwania: +000000 00:00:04.340000000
+Odcinek 4; pomiar 9; Czas startu wyszukiwania: 12/05/2020 11:35:20:785000000
+Pierwsza najwieksza liczba to: 199999582,249948424736515541532377843466
+Druga najwieksza liczba to: 199999574,338218616054572039474142987711
+czas zakonczenia wyszukiwania: 12/05/2020 11:35:24:943000000
+Odcinek 4; pomiar 9; Czas trwania wyszukiwania: +000000 00:00:04.158000000
+Odcinek 4; pomiar 10; Czas startu wyszukiwania: 12/05/2020 11:35:24:943000000
+Pierwsza najwieksza liczba to: 199999582,249948424736515541532377843466
+Druga najwieksza liczba to: 199999574,338218616054572039474142987711
+czas zakonczenia wyszukiwania: 12/05/2020 11:35:29:086000000
+Odcinek 4; pomiar 10; Czas trwania wyszukiwania: +000000 00:00:04.143000000
+Odcinek 5; pomiar 1; Czas startu wyszukiwania: 12/05/2020 11:35:29:086000000
+Pierwsza najwieksza liczba to: 199999973,925910255655569812574219135142
+Druga najwieksza liczba to: 199999969,66517056043480557327130506809
+czas zakonczenia wyszukiwania: 12/05/2020 11:35:33:436000000
+Odcinek 5; pomiar 1; Czas trwania wyszukiwania: +000000 00:00:04.350000000
+Odcinek 5; pomiar 2; Czas startu wyszukiwania: 12/05/2020 11:35:33:436000000
+Pierwsza najwieksza liczba to: 199999973,925910255655569812574219135142
+Druga najwieksza liczba to: 199999969,66517056043480557327130506809
+czas zakonczenia wyszukiwania: 12/05/2020 11:35:37:656000000
+Odcinek 5; pomiar 2; Czas trwania wyszukiwania: +000000 00:00:04.220000000
+Odcinek 5; pomiar 3; Czas startu wyszukiwania: 12/05/2020 11:35:37:656000000
+Pierwsza najwieksza liczba to: 199999973,925910255655569812574219135142
+Druga najwieksza liczba to: 199999969,66517056043480557327130506809
+czas zakonczenia wyszukiwania: 12/05/2020 11:35:41:988000000
+Odcinek 5; pomiar 3; Czas trwania wyszukiwania: +000000 00:00:04.332000000
+Odcinek 5; pomiar 4; Czas startu wyszukiwania: 12/05/2020 11:35:41:988000000
+Pierwsza najwieksza liczba to: 199999973,925910255655569812574219135142
+Druga najwieksza liczba to: 199999969,66517056043480557327130506809
+czas zakonczenia wyszukiwania: 12/05/2020 11:35:46:027000000
+Odcinek 5; pomiar 4; Czas trwania wyszukiwania: +000000 00:00:04.039000000
+Odcinek 5; pomiar 5; Czas startu wyszukiwania: 12/05/2020 11:35:46:027000000
+Pierwsza najwieksza liczba to: 199999973,925910255655569812574219135142
+Druga najwieksza liczba to: 199999969,66517056043480557327130506809
+czas zakonczenia wyszukiwania: 12/05/2020 11:35:50:028000000
+Odcinek 5; pomiar 5; Czas trwania wyszukiwania: +000000 00:00:04.001000000
+Odcinek 5; pomiar 6; Czas startu wyszukiwania: 12/05/2020 11:35:50:028000000
+Pierwsza najwieksza liczba to: 199999973,925910255655569812574219135142
+Druga najwieksza liczba to: 199999969,66517056043480557327130506809
+czas zakonczenia wyszukiwania: 12/05/2020 11:35:54:151000000
+Odcinek 5; pomiar 6; Czas trwania wyszukiwania: +000000 00:00:04.123000000
+Odcinek 5; pomiar 7; Czas startu wyszukiwania: 12/05/2020 11:35:54:151000000
+Pierwsza najwieksza liczba to: 199999973,925910255655569812574219135142
+Druga najwieksza liczba to: 199999969,66517056043480557327130506809
+czas zakonczenia wyszukiwania: 12/05/2020 11:35:58:269000000
+Odcinek 5; pomiar 7; Czas trwania wyszukiwania: +000000 00:00:04.118000000
+Odcinek 5; pomiar 8; Czas startu wyszukiwania: 12/05/2020 11:35:58:269000000
+Pierwsza najwieksza liczba to: 199999973,925910255655569812574219135142
+Druga najwieksza liczba to: 199999969,66517056043480557327130506809
+czas zakonczenia wyszukiwania: 12/05/2020 11:36:02:332000000
+Odcinek 5; pomiar 8; Czas trwania wyszukiwania: +000000 00:00:04.063000000
+Odcinek 5; pomiar 9; Czas startu wyszukiwania: 12/05/2020 11:36:02:332000000
+Pierwsza najwieksza liczba to: 199999973,925910255655569812574219135142
+Druga najwieksza liczba to: 199999969,66517056043480557327130506809
+czas zakonczenia wyszukiwania: 12/05/2020 11:36:06:299000000
+Odcinek 5; pomiar 9; Czas trwania wyszukiwania: +000000 00:00:03.967000000
+Odcinek 5; pomiar 10; Czas startu wyszukiwania: 12/05/2020 11:36:06:299000000
+Pierwsza najwieksza liczba to: 199999973,925910255655569812574219135142
+Druga najwieksza liczba to: 199999969,66517056043480557327130506809
+czas zakonczenia wyszukiwania: 12/05/2020 11:36:10:480000000
+Odcinek 5; pomiar 10; Czas trwania wyszukiwania: +000000 00:00:04.181000000
+
