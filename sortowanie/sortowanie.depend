@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1608670989 source:c:\users\artur\documents\wsm_repo\algorytmy_i_zlozonosc\sortowanie\sortowanie.cpp
+	<bits/stdc++.h>
+	<iostream>
+	<string>
+	<stdio.h>
+	<time.h>
+	<windows.h>
+	<conio.h>
+
