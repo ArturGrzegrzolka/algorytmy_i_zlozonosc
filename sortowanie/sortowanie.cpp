@@ -350,80 +350,72 @@ void InsertionDescSort(unsigned long main_arr[], unsigned long arraySize)
 // Merges two subarrays of arr[].
 // First subarray is arr[l..m]
 // Second subarray is arr[m+1..r]
-void MergeAsc(unsigned long arr[], unsigned long left, unsigned long m, unsigned long right)
-{
-    unsigned long arraySize = sizeof(arr)/sizeof(arr[0]);
-    unsigned long n1 = m - left + 1;
-    unsigned long n2 = right - m;
-
+void MergeAsc(unsigned long arr[], unsigned long left, unsigned long mid, unsigned long right)
+{   unsigned long n1 = mid - left + 1;
+    unsigned long n2 = right - mid;
+    unsigned long i, j, k;
+    if(left>=right)
+    { return;//returns recursively
+    }
     // Create temp arrays
     unsigned long L[n1], R[n2];
-
     // Copy data to temp arrays L[] and R[]
-    for (unsigned long i = 0; i < n1; i++)
+    for ( i = 0; i < n1; i++)
         L[i] = arr[left + i];
-    for (unsigned long j = 0; j < n2; j++)
-        R[j] = arr[m + 1 + j];
-
-    // Merge the temp arrays back into arr[l..r]
-
+    for ( j = 0; j < n2; j++)
+        R[j] = arr[mid + 1 + j];
     // Initial index of first subarray
-    unsigned long i = 0;
-
+     i = 0;
     // Initial index of second subarray
-    unsigned long j = 0;
-
+     j = 0;
     // Initial index of merged subarray
-    unsigned long k = left;
-
-    while (i < n1 && j < n2) {
-        if (L[i] <= R[j]) {
-            arr[k] = L[i];
-            i++;
-        }
-        else {
-            arr[k] = R[j];
-            j++;
-        }
+     k = left;
+    while (i < n1 && j < n2)
+    {   if (L[i] <= R[j])
+        {   arr[k] = L[i];
+            i++;    }
+        else
+        {   arr[k] = R[j];
+            j++;    }
         k++;
-    }
-    // Copy the remaining elements of
-    // L[], if there are any
-    while (i < n1) {
-        arr[k] = L[i];
+    }   // Copy the remaining elements of
+        // L[], if there are any
+    while (i < n1)
+    {   arr[k] = L[i];
         i++;
-        k++;
-    }
-    // Copy the remaining elements of
-    // R[], if there are any
-    while (j < n2) {
-        arr[k] = R[j];
+        k++;    }
+        // Copy the remaining elements of
+        // R[], if there are any
+    while (j < n2)
+    {   arr[k] = R[j];
         j++;
-        k++;
-    }
+        k++;    }
 }
 //-------------------------------------------------------------------------------------------
-void MergeDesc(unsigned long a[], unsigned long low, unsigned long mid, unsigned long high )
+void MergeDesc(unsigned long arr[], unsigned long low, unsigned long mid, unsigned long high )
 {	unsigned long i=low,j=mid+1,k=0;
 	unsigned long temp[high-low+1];
 
+	if(low>=high)
+    { return;//returns recursively
+    }
 	while(i<=mid && j<= high)
-	{	if(a[i]>a[j])               //comparison step
-	        temp[k++]=a[i++];
+	{	if(arr[i]>arr[j])               //comparison step
+	        temp[k++]=arr[i++];
 	    else
-	        temp[k++]=a[j++];
+	        temp[k++]=arr[j++];
 	}
 	while(i<=mid)
 	    {
-	        temp[k++]=a[i++];
+	        temp[k++]=arr[i++];
 	    }
 	while(j<=high)
 	    {
-	        temp[k++]=a[j++];
+	        temp[k++]=arr[j++];
 	    }
 	for(i=low;i<=high;i++)
 	{
-	    a[i]=temp[i-low];
+	    arr[i]=temp[i-low];
 	}
 	return;
 }
@@ -431,22 +423,21 @@ void MergeDesc(unsigned long a[], unsigned long low, unsigned long mid, unsigned
 // left is for left index and r is
 // right index of the sub-array
 // of arr to be sorted */
-void MergeSort(unsigned long array[],unsigned long left,unsigned long right, char direction)
+void MergeSort(unsigned long arr[],unsigned long left,unsigned long right, char direction)
 {
     if(left>=right)
 	{	return;//returns recursively
     }
-
-    unsigned long mid = (left+right-1)/2;
+    unsigned long mid = left+(right-1-left)/2;
     if (direction == 'A')
-    {	MergeSort(array,left,mid,'A');
-	    MergeSort(array,mid+1,right,'A');
-	    MergeAsc(array,left,mid,right);
+    {	MergeSort(arr,left,mid,direction);
+	    MergeSort(arr,mid+1,right,direction);
+	    MergeAsc(arr,left,mid,right);
 	}
 	else
-    {	MergeSort(array,left,mid,'D');
-	    MergeSort(array,mid+1,right,'D');
-	    MergeDesc(array,left,mid,right);
+    {	MergeSort(arr,left,mid,direction);
+	    MergeSort(arr,mid+1,right,direction);
+	    MergeDesc(arr,left,mid,right);
 	}
 }
 
@@ -460,13 +451,13 @@ void MergeSortArray(unsigned long local_arr[], unsigned long localarraySize, cha
 	time_t start_petla = time(0);
 	time_t stop_petla = time(0);
 
-	cout << "MergeSort temparray size : "<<sizeof(temp_array)/sizeof(temp_array[0]) <<endl;
+	cout << "MergeSort temporary size : "<<sizeof(temp_array)/sizeof(temp_array[0]) <<endl;
 
 	if (direction == 'A' && partsort =='N')
     {
 		for (i=0; i<localarraySize; i++)
 		{temp_array[i] = local_arr[i];	}
-		MergeSort(temp_array, 0, localarraySize-1,'A');
+		MergeSort(temp_array, 0, localarraySize-1,direction);
 		cout << "MergeSort array size : "<<localarraySize <<endl;
 		//cout << "MergeSort array: ";
 		//printArray(temp_array, localarraySize );
@@ -475,7 +466,7 @@ void MergeSortArray(unsigned long local_arr[], unsigned long localarraySize, cha
     {
 		for (i=0; i<localarraySize; i++)
 		{temp_array[i] = local_arr[i];	}
-		MergeSort(temp_array, 0, localarraySize-1,'D');
+		MergeSort(temp_array, 0, localarraySize-1,direction);
 		cout << "MergeSort array size : "<<localarraySize <<endl;
 		//cout << "MergeSort array: ";
 		//printArray(temp_array, localarraySize );
@@ -501,7 +492,7 @@ void MergeSortArray(unsigned long local_arr[], unsigned long localarraySize, cha
 					for(i=0; i<temp_part_arraySize; i++)
 					{	temp_part_array[i] = local_arr[start_with]; start_with++; }
 
-					MergeSort(temp_part_array, 0, temp_part_arraySize-1,'A');
+					MergeSort(temp_part_array, 0, temp_part_arraySize-1,direction);
 
 				stop_petla = time(0);
 				elapsed_seconds = stop_petla-start_petla;
@@ -533,7 +524,7 @@ void MergeSortArray(unsigned long local_arr[], unsigned long localarraySize, cha
 					for(i=0; i<temp_part_arraySize; i++)
 					{	temp_part_array[i] = local_arr[start_with]; start_with++; }
 
-					MergeSort(temp_part_array, 0, temp_part_arraySize-1,'D');
+					MergeSort(temp_part_array, 0, temp_part_arraySize-1,direction);
 				stop_petla = time(0);
 				elapsed_seconds = stop_petla-start_petla;
 			    std::cout << "Selection sort end: " << std::ctime(&stop_petla)<< std::endl;
