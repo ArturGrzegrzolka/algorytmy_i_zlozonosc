@@ -10,6 +10,8 @@
 #include <chrono>
 #include <algorithm>
 #include <iomanip>
+#include <vector>
+
 
 using namespace std;
 
@@ -39,26 +41,26 @@ void f_current_time(string sorting_type, string par1)
 //-------------------------------------------------------------------------------------------
 // Function to print an array
 //-------------------------------------------------------------------------------------------
-void printArray(unsigned long *array,unsigned long arraySize)
-{ 	unsigned long i;
+void printArray(int  *array, int  arraySize)
+{ 	int  i;
 	for (i=0; i < arraySize; i++)
 		cout << array[i] << " ";
 	cout << endl;
 }
 
-void swap(unsigned long *xp, unsigned long *yp)
-{ 	unsigned long temp = *xp;
+void swap(int  *xp, int  *yp)
+{ 	int  temp = *xp;
 	*xp = *yp;
 	*yp = temp;
 }
 //-------------------------------------------------------------------------------------------
 //selection ASC sort function -- all elements
 //-------------------------------------------------------------------------------------------
-void SelectionSortAsc(unsigned long main_arr[],unsigned long arraySize)
-{	unsigned long temp_array[arraySize];
-	unsigned long i,j,min,licznik,a;
+void SelectionSortAsc(vector <int> *main_arr,int  arraySize)
+{	int  temp_array[arraySize];
+	int  i,j,min,licznik,a;
 
-	for (a=0; a<arraySize; a++)
+	for (a=0; a<main_arr->size(); a++)
 	{temp_array[a] = main_arr[a];
 	}
 
@@ -73,7 +75,7 @@ void SelectionSortAsc(unsigned long main_arr[],unsigned long arraySize)
 			  min=temp_array[j];
 		  }
 	  }
-	  unsigned long temp=temp_array[i] ;
+	  int  temp=temp_array[i] ;
 	  temp_array[i]=temp_array[licznik];  		//swap
 	  temp_array[licznik]=temp;
 	}
@@ -83,10 +85,10 @@ void SelectionSortAsc(unsigned long main_arr[],unsigned long arraySize)
 //-------------------------------------------------------------------------------------------
 //SelectionSortDesc
 //-------------------------------------------------------------------------------------------
-void SelectionSortDesc(unsigned long main_arr[],unsigned long arraySize)
+void SelectionSortDesc(int  main_arr[],int  arraySize)
 {
-	unsigned long temp_array[arraySize];
-	unsigned long i,j,min,licznik,a;
+	int  temp_array[arraySize];
+	int  i,j,min,licznik,a;
 
 	for (a=0; a<arraySize; a++)
 	{temp_array[a] = main_arr[a];
@@ -103,7 +105,7 @@ void SelectionSortDesc(unsigned long main_arr[],unsigned long arraySize)
 			  min=temp_array[j];
 		  }
 	  }
-	  unsigned long temp=temp_array[i] ;
+	  int  temp=temp_array[i] ;
 	  temp_array[i]=temp_array[licznik];  		//swap
 	  temp_array[licznik]=temp;
 	}
@@ -114,10 +116,10 @@ void SelectionSortDesc(unsigned long main_arr[],unsigned long arraySize)
 //selection ASC sort function -- all parts elements
 //-------------------------------------------------------------------------------------------
 
-void PartSelectionSortAsc(unsigned long main_arr[],unsigned long arraySize)
-{	unsigned long temp_arraySize = arraySize/5;
-	unsigned long temp_array[temp_arraySize];
-	unsigned long i,j,min,licznik, start_with, temp;
+void PartSelectionSortAsc(int  main_arr[],int  arraySize)
+{	int  temp_arraySize = arraySize/5;
+	int  temp_array[temp_arraySize];
+	int  i,j,min,licznik, start_with, temp;
     int odcinek_pom =0, petla =0;
 	float elapsed_seconds;
 	auto start_petla = std::chrono::system_clock::now();
@@ -184,10 +186,10 @@ void PartSelectionSortAsc(unsigned long main_arr[],unsigned long arraySize)
 //-------------------------------------------------------------------------------------------
 //selection DESC sort function -- all parts elements
 //-------------------------------------------------------------------------------------------
-void PartSelectionSortDesc(unsigned long main_arr[],unsigned long arraySize)
-{	unsigned long temp_arraySize = arraySize/5;
-	unsigned long temp_array[temp_arraySize];
-	unsigned long i,j,min,licznik, start_with, temp;
+void PartSelectionSortDesc(int  main_arr[],int  arraySize)
+{	int  temp_arraySize = arraySize/5;
+	int  temp_array[temp_arraySize];
+	int  i,j,min,licznik, start_with, temp;
 	int petla =0;
 
 	//petla - odcinki
@@ -231,11 +233,11 @@ void PartSelectionSortDesc(unsigned long main_arr[],unsigned long arraySize)
 //-------------------------------------------------------------------------------------------
 //PartInsertionSortAsc
 //-------------------------------------------------------------------------------------------
-void PartInsertionSortAsc(unsigned long main_arr[], unsigned long arraySize)
+void PartInsertionSortAsc(int  main_arr[], int  arraySize)
 {
-	unsigned long temp_array[arraySize];
-    unsigned long i, j, temp, start_with;
-    unsigned long temp_arraySize = arraySize/5;
+	int  temp_array[arraySize];
+    int  i, j, temp, start_with;
+    int  temp_arraySize = arraySize/5;
 
 	int petla =0;
 	//petla - odcinki
@@ -271,11 +273,11 @@ void PartInsertionSortAsc(unsigned long main_arr[], unsigned long arraySize)
 //-------------------------------------------------------------------------------------------
 //PartInsertionSortDesc
 //-------------------------------------------------------------------------------------------
-void PartInsertionSortDesc(unsigned long main_arr[], unsigned long arraySize)
+void PartInsertionSortDesc(int  main_arr[], int  arraySize)
 {
-	unsigned long temp_array[arraySize];
-    unsigned long i, j, temp, start_with;
-    unsigned long temp_arraySize = arraySize/5;
+	int  temp_array[arraySize];
+    int  i, j, temp, start_with;
+    int  temp_arraySize = arraySize/5;
 
 	int petla =0;
 	//petla - odcinki
@@ -310,10 +312,10 @@ void PartInsertionSortDesc(unsigned long main_arr[], unsigned long arraySize)
 //-------------------------------------------------------------------------------------------
 //InsertionAscSort
 //-------------------------------------------------------------------------------------------
-void InsertionAscSort(unsigned long main_arr[], unsigned long arraySize)
+void InsertionAscSort(int  main_arr[], int  arraySize)
 {
-	unsigned long temp_array[arraySize];
-    unsigned long i, j, temp;
+	int  temp_array[arraySize];
+    int  i, j, temp;
 
 	for (i=0; i<arraySize; i++)
 	{temp_array[i] = main_arr[i];	}
@@ -339,10 +341,10 @@ void InsertionAscSort(unsigned long main_arr[], unsigned long arraySize)
 //-------------------------------------------------------------------------------------------
 //InsertionDescSort
 //-------------------------------------------------------------------------------------------
-void InsertionDescSort(unsigned long main_arr[], unsigned long arraySize)
+void InsertionDescSort(int  main_arr[], int  arraySize)
 {
-	unsigned long temp_array[arraySize];
-    unsigned long i, j, temp;
+	int  temp_array[arraySize];
+    int  i, j, temp;
 
 	for (i=0; i<arraySize; i++)
 	{temp_array[i] = main_arr[i];	}
@@ -370,15 +372,15 @@ void InsertionDescSort(unsigned long main_arr[], unsigned long arraySize)
 // Merges two subarrays of arr[].
 // First subarray is arr[l..m]
 // Second subarray is arr[m+1..r]
-void MergeAsc(unsigned long arr[], unsigned long left, unsigned long mid, unsigned long right)
-{   unsigned long n1 = mid - left + 1;
-    unsigned long n2 = right - mid;
-    unsigned long i, j, k;
+void MergeAsc(int  arr[], int  left, int  mid, int  right)
+{   int  n1 = mid - left + 1;
+    int  n2 = right - mid;
+    int  i, j, k;
     if(left>=right)
     { return;//returns recursively
     }
     // Create temp arrays
-    unsigned long L[n1], R[n2];
+    int  L[n1], R[n2];
     // Copy data to temp arrays L[] and R[]
     for ( i = 0; i < n1; i++)
         L[i] = arr[left + i];
@@ -412,9 +414,9 @@ void MergeAsc(unsigned long arr[], unsigned long left, unsigned long mid, unsign
         k++;    }
 }
 //-------------------------------------------------------------------------------------------
-void MergeDesc(unsigned long arr[], unsigned long low, unsigned long mid, unsigned long high )
-{	unsigned long i=low,j=mid+1,k=0;
-	unsigned long temp[high-low+1];
+void MergeDesc(int  arr[], int  low, int  mid, int  high )
+{	int  i=low,j=mid+1,k=0;
+	int  temp[high-low+1];
 
 	if(low>=high)
     { return;//returns recursively
@@ -443,12 +445,12 @@ void MergeDesc(unsigned long arr[], unsigned long low, unsigned long mid, unsign
 // left is for left index and r is
 // right index of the sub-array
 // of arr to be sorted */
-void MergeSort(unsigned long arr[],unsigned long left,unsigned long right, char direction)
+void MergeSort(int  arr[],int  left,int  right, char direction)
 {
     if(left>=right)
 	{	return;//returns recursively
     }
-    unsigned long mid = left+(right-1-left)/2;
+    int  mid = left+(right-1-left)/2;
     if (direction == 'A')
     {	MergeSort(arr,left,mid,direction);
 	    MergeSort(arr,mid+1,right,direction);
@@ -461,12 +463,12 @@ void MergeSort(unsigned long arr[],unsigned long left,unsigned long right, char 
 	}
 }
 
-void MergeSortArray(unsigned long local_arr[], unsigned long localarraySize, char direction, char partsort)
+void MergeSortArray(int  local_arr[], int  localarraySize, char direction, char partsort)
 {
-	unsigned long temp_array[localarraySize];
-	unsigned long i, start_with;
-	unsigned long temp_part_arraySize = localarraySize/5;
-	unsigned long temp_part_array[temp_part_arraySize];
+	int  temp_array[localarraySize];
+	int  i, start_with;
+	int  temp_part_arraySize = localarraySize/5;
+	int  temp_part_array[temp_part_arraySize];
 	double elapsed_seconds;
 	auto  start_petla = chrono::system_clock::now(); //time(0);
 	auto  stop_petla = chrono::system_clock::now(); //time(0);
@@ -563,23 +565,25 @@ void MergeSortArray(unsigned long local_arr[], unsigned long localarraySize, cha
 // main program
 int main()
 { 	char v_znak;
-	unsigned long total_numbers =200000, tmp_max_numbers =50000 ;
+	int  total_numbers =200000, tmp_max_numbers =50000 ;
 	//total_numbers musi dzielic sie bez reszty przez 100000
-	unsigned long main_arr[total_numbers], temp_arr[total_numbers];
+	//int  main_arr[total_numbers], temp_arr[total_numbers];
+	std::vector <int> main_arr; //(total_numbers);
+	std::vector <int> temp_arr; //(total_numbers);
 	int i,j,k;
-	//unsigned long main_arr[total_numbers] = {315,309,306,313,358,325,323,321, 115,9,6,13,58,25,23,21,
+	//int  main_arr[total_numbers] = {315,309,306,313,358,325,323,321, 115,9,6,13,58,25,23,21,
 	//312,302,307,301,308,322,341,325, 12,2,7,1,8,22,41,25, 362,324,372,334,319,318,319,316, 62,24,72,34,19,18,119,116,
 	//323,321,312,320,317,311,328,341, 123,121,112,120,117,111,128,141, 325,362,358,324,372,334,314,318,
 	//125,162,158,124,172,134,114,118};
 	cout <<"Program start\n";
 
-	unsigned long arraySize = sizeof(main_arr)/sizeof(main_arr[0]);
+	int  arraySize = sizeof(main_arr)/sizeof(main_arr[0]);
 	double elapsed_seconds;
 	auto start_sort = chrono::system_clock::now();
 	auto stop_sort  = chrono::system_clock::now();
 	auto t_c        = std::chrono::system_clock::to_time_t(start_sort);
 
-	for (unsigned long i=0; i<total_numbers; i++)
+	for (int  i=0; i<total_numbers; i++)
 	{
 	    main_arr[i] = rand();
 	    //cout << main_arr[i] << " ";
@@ -616,7 +620,7 @@ int main()
 					start_sort  = chrono::system_clock::now();
 					f_current_time("Ascending Selection Sort", "Start");
 
-						SelectionSortAsc(main_arr, arraySize);
+						SelectionSortAsc(&main_arr, arraySize);
 						cout << "main array size: "<<sizeof(main_arr)/sizeof(main_arr[0])<<endl;
 					stop_sort = chrono::system_clock::now();
 				    f_current_time("Ascending Selection sort", "Stop");
