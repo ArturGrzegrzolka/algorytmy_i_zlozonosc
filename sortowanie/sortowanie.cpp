@@ -13,18 +13,6 @@
 
 using namespace std;
 
-// Get current date/time, format is YYYY-MM-DD.HH:mm:ss
-//const std::string currentDateTime() {
-//    auto      now = time(0);
-//    struct tm  tstruct;
-//    char       buf[80];
-//    tstruct = *localtime(&now);
-//    // Visit http://en.cppreference.com/w/cpp/chrono/c/strftime
-//    // for more information about date/time format
-//    strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
-//    return buf;
-//}
-
 void f_current_time(string sorting_type, string par1)
 {
     time_t curr_time;
@@ -39,27 +27,27 @@ void f_current_time(string sorting_type, string par1)
 //-------------------------------------------------------------------------------------------
 // Function to print an array
 //-------------------------------------------------------------------------------------------
-void printArray(unsigned long *array,unsigned long arraySize)
-{ 	unsigned long i;
+void printArray(int *array,int arraySize)
+{ 	int i;
 	for (i=0; i < arraySize; i++)
 		cout << array[i] << " ";
 	cout << endl;
 }
 
-void swap(unsigned long *xp, unsigned long *yp)
-{ 	unsigned long temp = *xp;
+void swap(int *xp, int *yp)
+{ 	int temp = *xp;
 	*xp = *yp;
 	*yp = temp;
 }
 //-------------------------------------------------------------------------------------------
 //selection ASC sort function -- all elements
 //-------------------------------------------------------------------------------------------
-void SelectionSortAsc(unsigned long main_arr[],unsigned long arraySize)
-{	unsigned long temp_array[arraySize];
-	unsigned long i,j,min,licznik,a;
+void SelectionSortAsc(int *main_arr,int arraySize)
+{	int temp_array[arraySize];
+	int i,j,min,licznik,a;
 
 	for (a=0; a<arraySize; a++)
-	{temp_array[a] = main_arr[a];
+	{temp_array[a] = *main_arr; main_arr++;
 	}
 
 	for(i=0;i<(arraySize-1);i++)
@@ -73,23 +61,24 @@ void SelectionSortAsc(unsigned long main_arr[],unsigned long arraySize)
 			  min=temp_array[j];
 		  }
 	  }
-	  unsigned long temp=temp_array[i] ;
+	  int temp=temp_array[i] ;
 	  temp_array[i]=temp_array[licznik];  		//swap
 	  temp_array[licznik]=temp;
 	}
 	//cout << "Sorted ASC array: \n";
 	//printArray(temp_array, arraySize );
+	//delete [] temp_array;
 }
 //-------------------------------------------------------------------------------------------
 //SelectionSortDesc
 //-------------------------------------------------------------------------------------------
-void SelectionSortDesc(unsigned long main_arr[],unsigned long arraySize)
+void SelectionSortDesc(int *main_arr,int arraySize)
 {
-	unsigned long temp_array[arraySize];
-	unsigned long i,j,min,licznik,a;
+	int temp_array[arraySize];
+	int i,j,min,licznik,a;
 
 	for (a=0; a<arraySize; a++)
-	{temp_array[a] = main_arr[a];
+	{temp_array[a] = *main_arr; main_arr++;
 	}
 
 	for(i=0;i<(arraySize-1);i++)
@@ -103,21 +92,22 @@ void SelectionSortDesc(unsigned long main_arr[],unsigned long arraySize)
 			  min=temp_array[j];
 		  }
 	  }
-	  unsigned long temp=temp_array[i] ;
+	  int temp=temp_array[i] ;
 	  temp_array[i]=temp_array[licznik];  		//swap
 	  temp_array[licznik]=temp;
 	}
 	//cout << "Sorted DESC array: \n";
 	//printArray(temp_array, arraySize );
+    //delete [] temp_array;
 }
 //-------------------------------------------------------------------------------------------
 //selection ASC sort function -- all parts elements
 //-------------------------------------------------------------------------------------------
 
-void PartSelectionSortAsc(unsigned long main_arr[],unsigned long arraySize)
-{	unsigned long temp_arraySize = arraySize/5;
-	unsigned long temp_array[temp_arraySize];
-	unsigned long i,j,min,licznik, start_with, temp;
+void PartSelectionSortAsc(int *main_arr,int arraySize)
+{	int temp_arraySize = arraySize/5;
+	int temp_array[temp_arraySize];
+	int i,j,min,licznik, start_with, temp;
     int odcinek_pom =0, petla =0;
 	float elapsed_seconds;
 	auto start_petla = std::chrono::system_clock::now();
@@ -125,51 +115,48 @@ void PartSelectionSortAsc(unsigned long main_arr[],unsigned long arraySize)
 
 		//petla - odcinki
 		for (odcinek_pom =0; odcinek_pom<5; odcinek_pom++)
-		{
-			cout << "odcinek_pom: "<< odcinek_pom << std::endl;
+		{   cout << "odcinek_pom: "<< odcinek_pom << std::endl;
 			for (petla =0; petla<5; petla++)
-			{
-				start_petla = std::chrono::system_clock::now();
-                {	if (petla == 0) { start_with=0;} else { start_with = temp_arraySize*petla;}
+			{   start_petla = std::chrono::system_clock::now();
+                start_with = temp_arraySize*odcinek_pom;
+                std::cout << "odcinek_pom: "<< odcinek_pom << "; petla: "<< petla <<"; " ;
+                //std::cout << "PartSelectionSortAsc start: " << std::chrono::system_clock::to_time_t(start_petla) << std::endl;
+                //cout << "petla: "<< petla << std::endl;
+                f_current_time("Part Ascending Selection Sort", "Start");
 
-                    std::cout << "odcinek_pom: "<< odcinek_pom << "; petla: "<< petla <<"; " ;
-                    //std::cout << "PartSelectionSortAsc start: " << std::chrono::system_clock::to_time_t(start_petla) << std::endl;
-                    //cout << "petla: "<< petla << std::endl;
-                    f_current_time("Part Ascending Selection Sort", "Start");
+                cout << "start_with: "<< start_with << std::endl;
+                cout << "temp_arraySize: "<< temp_arraySize << std::endl;
 
-                    cout << "start_with: "<< start_with << std::endl;
-                    cout << "temp_arraySize: "<< temp_arraySize << std::endl;
+                //cout << "przepisanie danych\n";
+//???????????????????
+                for(i=0;i<=(temp_arraySize-1);i++)
+                {	temp_array[i] = main_arr[start_with]; start_with++; }
+                //cout << "Part Sorted ASC array: \n";
 
-                    //cout << "przepisanie danych\n";
-                    for(i=0;i<=(temp_arraySize-1);i++)
-                    {	temp_array[i] = main_arr[start_with]; start_with++; }
-                    //cout << "Part Sorted ASC array: \n";
+                //printArray(array, arraySize );
+                //printArray(temp_array, temp_arraySize );
 
-                    //printArray(array, arraySize );
-                    //printArray(temp_array, temp_arraySize );
+                licznik=0;
+                min=0;
+                //zaczynam sortowac
+                for(i=0;i<temp_arraySize;i++)
+                {	licznik=i;
+                    min=temp_array[i];
 
-                    cout <<"Temp arraySize: "<< sizeof(temp_array)/sizeof(temp_array[0]) << std::endl;
-                    licznik=0;
-                    min=0;
-                    //zaczynam sortowac
-                    for(i=0;i<temp_arraySize;i++)
-                    {	licznik=i;
-                        min=temp_array[i];
-
-                        for(j=i;j<temp_arraySize;j++) 	//select the min of the rest of array
-                        {
-                          if(min>temp_array[j])   			//ascending order for descending reverse
-                          {	  licznik=j;  					//the position of the min element
-                              min=temp_array[j];
-                          }
-                        }
-                        temp=temp_array[i] ;
-                        temp_array[i]=temp_array[licznik];  		//swap
-                        temp_array[licznik]=temp;
+                    for(j=i;j<temp_arraySize;j++) 	//select the min of the rest of array
+                    {
+                      if(min>temp_array[j])   			//ascending order for descending reverse
+                      {	  licznik=j;  					//the position of the min element
+                          min=temp_array[j];
+                      }
                     }
-                    //cout << "Part Sorted ASC array: \n";
-                    //printArray(temp_array, temp_arraySize );
+                    temp=temp_array[i] ;
+                    temp_array[i]=temp_array[licznik];  		//swap
+                    temp_array[licznik]=temp;
                 }
+                //cout << "Part Sorted ASC array: \n";
+                //printArray(temp_array, temp_arraySize );
+
                 stop_petla = std::chrono::system_clock::now();
 				elapsed_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(stop_petla - start_petla).count();
                 std::cout << "odcinek_pom: "<< odcinek_pom << "; petla: "<< petla <<"; " ;
@@ -177,143 +164,185 @@ void PartSelectionSortAsc(unsigned long main_arr[],unsigned long arraySize)
 
                 //std::cout << "PartSelectionSortAsc sort end: " << std::chrono::system_clock::to_time_t(stop_petla) << std::endl;
 			    std::cout << "PartSelectionSortAsc sort elapsed time: " << elapsed_seconds << "ms\n"<< std::endl;
-
 			}
 		}
+    //delete [] temp_array;
 }
 //-------------------------------------------------------------------------------------------
 //selection DESC sort function -- all parts elements
 //-------------------------------------------------------------------------------------------
-void PartSelectionSortDesc(unsigned long main_arr[],unsigned long arraySize)
-{	unsigned long temp_arraySize = arraySize/5;
-	unsigned long temp_array[temp_arraySize];
-	unsigned long i,j,min,licznik, start_with, temp;
-	int petla =0;
+void PartSelectionSortDesc(int *main_arr,int arraySize)
+{	int temp_arraySize = arraySize/5;
+	int temp_array[temp_arraySize];
+	int i,j,min,licznik, start_with, temp;
+    int odcinek_pom =0, petla =0;
+	float elapsed_seconds;
+	auto start_petla = std::chrono::system_clock::now();
+	auto stop_petla = std::chrono::system_clock::now();
 
-	//petla - odcinki
-	for (petla =0; petla<5; petla++)
-	{	if (petla == 0) { start_with=0;} else { start_with = temp_arraySize*petla;}
-		cout << "petla: "<< petla << std::endl;
-		cout << "start_with: "<< start_with << std::endl;
-		cout << "temp_arraySize: "<< temp_arraySize << std::endl;
+		//petla - odcinki
+		for (odcinek_pom =0; odcinek_pom<5; odcinek_pom++)
+		{   cout << "odcinek_pom: "<< odcinek_pom << std::endl;
+            for (petla =0; petla<5; petla++)
+            {	start_with = temp_arraySize*odcinek_pom;
+                start_petla = std::chrono::system_clock::now();
+                std::cout << "odcinek_pom: "<< odcinek_pom << "; petla: "<< petla <<"; " ;
+                f_current_time("Part Descending Selection Sort", "Start");
+                cout << "start_with: "<< start_with << std::endl;
+                cout << "temp_arraySize: "<< temp_arraySize << std::endl;
+                //cout << "przepisanie danych\n";
+                for(i=0;i<=(temp_arraySize-1);i++)
+                {	temp_array[i] = main_arr[start_with]; start_with++; }
+                //cout << "Part Sorted ASC array: \n";
 
-		//cout << "przepisanie danych\n";
-		for(i=0;i<=(temp_arraySize-1);i++)
-		{	temp_array[i] = main_arr[start_with]; start_with++; }
-		//cout << "Part Sorted ASC array: \n";
+                //printArray(array, arraySize );
+                //printArray(temp_array, temp_arraySize );
 
-		//printArray(array, arraySize );
-		//printArray(temp_array, temp_arraySize );
+                licznik=0;
+                min=0;
+                //zaczynam sortowac
+                for(i=0;i<temp_arraySize;i++)
+                {	licznik=i;
+                    min=temp_array[i];
 
-		cout <<"Temp arraySize: "<< sizeof(temp_array)/sizeof(temp_array[0]) << std::endl;
-		licznik=0;
-		min=0;
-		//zaczynam sortowac
-		for(i=0;i<temp_arraySize;i++)
-		{	licznik=i;
-			min=temp_array[i];
+                    for(j=i;j<temp_arraySize;j++) 	//select the min of the rest of array
+                    {
+                      if(min<temp_array[j])   			//descending order for descending reverse
+                      {	  licznik=j;  					//the position of the min element
+                          min=temp_array[j];
+                      }
+                    }
+                    temp=temp_array[i] ;
+                    temp_array[i]=temp_array[licznik];  		//swap
+                    temp_array[licznik]=temp;
+                }
+                //cout << "Part Sorted ASC array: \n";
+                //printArray(temp_array, temp_arraySize );
 
-			for(j=i;j<temp_arraySize;j++) 	//select the min of the rest of array
-			{
-			  if(min<temp_array[j])   			//descending order for descending reverse
-			  {	  licznik=j;  					//the position of the min element
-				  min=temp_array[j];
-			  }
-			}
-			temp=temp_array[i] ;
-			temp_array[i]=temp_array[licznik];  		//swap
-			temp_array[licznik]=temp;
+                stop_petla = std::chrono::system_clock::now();
+                elapsed_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(stop_petla - start_petla).count();
+                std::cout << "odcinek_pom: "<< odcinek_pom << "; petla: "<< petla <<"; " ;
+                f_current_time("Part Descending Selection Sort", "Stop");
+                std::cout << "PartSelectionSortDesc sort elapsed time: " << elapsed_seconds << "ms\n"<< std::endl;
+            }
 		}
-		//cout << "Part Sorted ASC array: \n";
-		//printArray(temp_array, temp_arraySize );
-	}
+	//delete [] temp_array;
 }
 //-------------------------------------------------------------------------------------------
 //PartInsertionSortAsc
 //-------------------------------------------------------------------------------------------
-void PartInsertionSortAsc(unsigned long main_arr[], unsigned long arraySize)
+void PartInsertionSortAsc(int *main_arr, int arraySize)
 {
-	unsigned long temp_array[arraySize];
-    unsigned long i, j, temp, start_with;
-    unsigned long temp_arraySize = arraySize/5;
+	int temp_array[arraySize];
+    int i, j, temp, start_with;
+    int temp_arraySize = arraySize/5;
+    int odcinek_pom =0, petla =0;
+	float elapsed_seconds;
+	auto start_petla = std::chrono::system_clock::now();
+	auto stop_petla = std::chrono::system_clock::now();
 
-	int petla =0;
-	//petla - odcinki
-	for (petla =0; petla<5; petla++)
-	{	if (petla == 0) { start_with=0;} else { start_with = temp_arraySize*petla;}
-		cout << "petla: "<< petla << std::endl;
-		cout << "start_with: "<< start_with << std::endl;
-		cout << "temp_arraySize: "<< temp_arraySize << std::endl;
+		//petla - odcinki
+		for (odcinek_pom =0; odcinek_pom<5; odcinek_pom++)
+		{   cout << "odcinek_pom: "<< odcinek_pom << std::endl;
+            //petla - odcinki
+            for (petla =0; petla<5; petla++)
+            {	start_with = temp_arraySize*odcinek_pom;
+                start_petla = std::chrono::system_clock::now();
+                std::cout << "odcinek_pom: "<< odcinek_pom << "; petla: "<< petla <<"; " ;
+                f_current_time("Part Ascending Insertion Sort", "Start");
+                cout << "start_with: "<< start_with << std::endl;
+                cout << "temp_arraySize: "<< temp_arraySize << std::endl;
 
-		//cout << "przepisanie danych\n";
-		for(i=0; i<temp_arraySize; i++)
-		{	temp_array[i] = main_arr[start_with]; start_with++; }
+                //cout << "przepisanie danych\n";
+                for(i=0; i<temp_arraySize; i++)
+                {	temp_array[i] = main_arr[start_with]; start_with++; }
 
-	    for (i = 1; i < temp_arraySize; i++)
-	    {  	temp = temp_array[i];
-	        j = i;
+                for (i = 1; i < temp_arraySize; i++)
+                {  	temp = temp_array[i];
+                    j = i;
 
-	        /* Move elements of arr[0..i-1], that are
-	        greater than min, to one position ahead
-	        of their current position */
-	        while (j > 0 && temp <= temp_array[j-1] && j < temp_arraySize)
-	        {
-	            temp_array[j] = temp_array[j-1];
-	            j = j - 1;
-	        }
-	        temp_array[j] = temp;
-	    }
-		//cout << "InsertionAsc array: \n";
-		//printArray(temp_array, temp_arraySize );
-	}
+                    /* Move elements of arr[0..i-1], that are
+                    greater than min, to one position ahead
+                    of their current position */
+                    while (j > 0 && temp <= temp_array[j-1] && j < temp_arraySize)
+                    {
+                        temp_array[j] = temp_array[j-1];
+                        j = j - 1;
+                    }
+                    temp_array[j] = temp;
+                }
+                //cout << "InsertionAsc array: \n";
+                //printArray(temp_array, temp_arraySize );
+                stop_petla = std::chrono::system_clock::now();
+                elapsed_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(stop_petla - start_petla).count();
+                std::cout << "odcinek_pom: "<< odcinek_pom << "; petla: "<< petla <<"; " ;
+                f_current_time("Part Ascending Insertion Sort", "Stop");
+                std::cout << "PartInsertionSortAsc sort elapsed time: " << elapsed_seconds << "ms\n"<< std::endl;
+            }
+		}
 }
 
 //-------------------------------------------------------------------------------------------
 //PartInsertionSortDesc
 //-------------------------------------------------------------------------------------------
-void PartInsertionSortDesc(unsigned long main_arr[], unsigned long arraySize)
+void PartInsertionSortDesc(int *main_arr, int arraySize)
 {
-	unsigned long temp_array[arraySize];
-    unsigned long i, j, temp, start_with;
-    unsigned long temp_arraySize = arraySize/5;
+	int temp_array[arraySize];
+    int i, j, temp, start_with;
+    int temp_arraySize = arraySize/5;
+    int odcinek_pom =0, petla =0;
+	float elapsed_seconds;
+	auto start_petla = std::chrono::system_clock::now();
+	auto stop_petla = std::chrono::system_clock::now();
 
-	int petla =0;
-	//petla - odcinki
-	for (petla =0; petla<5; petla++)
-	{	if (petla == 0) { start_with=0;} else { start_with = temp_arraySize*petla;}
-		cout << "petla: "<< petla << std::endl;
-		cout << "start_with: "<< start_with << std::endl;
-		cout << "temp_arraySize: "<< temp_arraySize << std::endl;
+		//petla - odcinki
+		for (odcinek_pom =0; odcinek_pom<5; odcinek_pom++)
+		{   cout << "odcinek_pom: "<< odcinek_pom << std::endl;
+            //petla - odcinki
+            for (petla =0; petla<5; petla++)
+            {	start_with = temp_arraySize*odcinek_pom;
+                start_petla = std::chrono::system_clock::now();
+                std::cout << "odcinek_pom: "<< odcinek_pom << "; petla: "<< petla <<"; " ;
+                f_current_time("Part Descending Insertion Sort", "Start");
+                cout << "start_with: "<< start_with << std::endl;
+                cout << "temp_arraySize: "<< temp_arraySize << std::endl;
 
-		//cout << "przepisanie danych\n";
-		for(i=0; i<temp_arraySize; i++)
-		{	temp_array[i] = main_arr[start_with]; start_with++; }
+                //cout << "przepisanie danych\n";
+                for(i=0; i<temp_arraySize; i++)
+                {	temp_array[i] = main_arr[start_with]; start_with++; }
 
-	    for (i = 1; i < temp_arraySize; i++)
-	    {  	temp = temp_array[i];
-	        j = i;
+                for (i = 1; i < temp_arraySize; i++)
+                {  	temp = temp_array[i];
+                    j = i;
 
-	        /* Move elements of arr[0..i-1], that are
-	        greater than min, to one position ahead
-	        of their current position */
-	        while (j > 0 && temp >= temp_array[j-1] && j < temp_arraySize)
-	        {
-	            temp_array[j] = temp_array[j-1];
-	            j = j - 1;
-	        }
-	        temp_array[j] = temp;
-	    }
-		//cout << "InsertionDesc array: \n";
-		//printArray(temp_array, temp_arraySize );
-	}
+                    /* Move elements of arr[0..i-1], that are
+                    greater than min, to one position ahead
+                    of their current position */
+                    while (j > 0 && temp >= temp_array[j-1] && j < temp_arraySize)
+                    {
+                        temp_array[j] = temp_array[j-1];
+                        j = j - 1;
+                    }
+                    temp_array[j] = temp;
+                }
+                //cout << "InsertionDesc array: \n";
+                //printArray(temp_array, temp_arraySize );
+                stop_petla = std::chrono::system_clock::now();
+                elapsed_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(stop_petla - start_petla).count();
+                std::cout << "odcinek_pom: "<< odcinek_pom << "; petla: "<< petla <<"; " ;
+                f_current_time("Part Descending Insertion Sort", "Stop");
+                std::cout << "PartInsertionSortDesc sort elapsed time: " << elapsed_seconds << "ms\n"<< std::endl;
+            }
+		}
+
 }
 //-------------------------------------------------------------------------------------------
 //InsertionAscSort
 //-------------------------------------------------------------------------------------------
-void InsertionAscSort(unsigned long main_arr[], unsigned long arraySize)
+void InsertionAscSort(int *main_arr, int arraySize)
 {
-	unsigned long temp_array[arraySize];
-    unsigned long i, j, temp;
+	int temp_array[arraySize];
+    int i, j, temp;
 
 	for (i=0; i<arraySize; i++)
 	{temp_array[i] = main_arr[i];	}
@@ -334,15 +363,16 @@ void InsertionAscSort(unsigned long main_arr[], unsigned long arraySize)
     }
 	//cout << "InsertionAsc array: \n";
 	//printArray(temp_array, arraySize );
+	//delete [] temp_array;
 }
 
 //-------------------------------------------------------------------------------------------
 //InsertionDescSort
 //-------------------------------------------------------------------------------------------
-void InsertionDescSort(unsigned long main_arr[], unsigned long arraySize)
+void InsertionDescSort(int *main_arr, int arraySize)
 {
-	unsigned long temp_array[arraySize];
-    unsigned long i, j, temp;
+	int temp_array[arraySize];
+    int i, j, temp;
 
 	for (i=0; i<arraySize; i++)
 	{temp_array[i] = main_arr[i];	}
@@ -363,6 +393,7 @@ void InsertionDescSort(unsigned long main_arr[], unsigned long arraySize)
     }
 	//cout << "InsertionDesc array: \n";
 	//printArray(temp_array, arraySize );
+	//delete [] temp_array;
 }
 //-------------------------------------------------------------------------------------------
 // merge sort
@@ -370,15 +401,15 @@ void InsertionDescSort(unsigned long main_arr[], unsigned long arraySize)
 // Merges two subarrays of arr[].
 // First subarray is arr[l..m]
 // Second subarray is arr[m+1..r]
-void MergeAsc(unsigned long arr[], unsigned long left, unsigned long mid, unsigned long right)
-{   unsigned long n1 = mid - left + 1;
-    unsigned long n2 = right - mid;
-    unsigned long i, j, k;
+void MergeAsc(int *arr, int left, int mid, int right)
+{   int n1 = mid - left + 1;
+    int n2 = right - mid;
+    int i, j, k;
     if(left>=right)
     { return;//returns recursively
     }
     // Create temp arrays
-    unsigned long L[n1], R[n2];
+    int L[n1], R[n2];
     // Copy data to temp arrays L[] and R[]
     for ( i = 0; i < n1; i++)
         L[i] = arr[left + i];
@@ -410,11 +441,13 @@ void MergeAsc(unsigned long arr[], unsigned long left, unsigned long mid, unsign
     {   arr[k] = R[j];
         j++;
         k++;    }
+    //delete [] L;
+    //delete [] R;
 }
 //-------------------------------------------------------------------------------------------
-void MergeDesc(unsigned long arr[], unsigned long low, unsigned long mid, unsigned long high )
-{	unsigned long i=low,j=mid+1,k=0;
-	unsigned long temp[high-low+1];
+void MergeDesc(int *arr, int low, int mid, int high )
+{	int i=low,j=mid+1,k=0;
+	int temp[high-low+1];
 
 	if(low>=high)
     { return;//returns recursively
@@ -438,17 +471,18 @@ void MergeDesc(unsigned long arr[], unsigned long low, unsigned long mid, unsign
 	    arr[i]=temp[i-low];
 	}
 	return;
+	//delete [] temp;
 }
 //-------------------------------------------------------------------------------------------
 // left is for left index and r is
 // right index of the sub-array
 // of arr to be sorted */
-void MergeSort(unsigned long arr[],unsigned long left,unsigned long right, char direction)
+void MergeSort(int *arr,int left,int right, char direction)
 {
     if(left>=right)
 	{	return;//returns recursively
     }
-    unsigned long mid = left+(right-1-left)/2;
+    int mid = left+(right-1-left)/2;
     if (direction == 'A')
     {	MergeSort(arr,left,mid,direction);
 	    MergeSort(arr,mid+1,right,direction);
@@ -461,17 +495,15 @@ void MergeSort(unsigned long arr[],unsigned long left,unsigned long right, char 
 	}
 }
 
-void MergeSortArray(unsigned long local_arr[], unsigned long localarraySize, char direction, char partsort)
+void MergeSortArray(int *local_arr, int localarraySize, char direction, char partsort)
 {
-	unsigned long temp_array[localarraySize];
-	unsigned long i, start_with;
-	unsigned long temp_part_arraySize = localarraySize/5;
-	unsigned long temp_part_array[temp_part_arraySize];
+	int temp_array[localarraySize];
+	int i, start_with;
+	int temp_part_arraySize = localarraySize/5;
+	int temp_part_array[temp_part_arraySize];
 	double elapsed_seconds;
 	auto  start_petla = chrono::system_clock::now(); //time(0);
 	auto  stop_petla = chrono::system_clock::now(); //time(0);
-
-	//cout << "MergeSort temporary size : "<<sizeof(temp_array)/sizeof(temp_array[0]) <<endl;
 
 	if (direction == 'A' && partsort =='N')
     {
@@ -492,96 +524,91 @@ void MergeSortArray(unsigned long local_arr[], unsigned long localarraySize, cha
 		//printArray(temp_array, localarraySize );
 	}
     else if (direction == 'A' && partsort =='Y')
-    {
-		int odcinek_pom =0, petla =0;
+    {   int odcinek_pom =0, petla =0;
 		//petla - odcinki
 		for (odcinek_pom =0; odcinek_pom<5; odcinek_pom++)
-		{
-			cout << "odcinek_pom: "<< odcinek_pom << std::endl;
+		{   cout << "odcinek_pom: "<< odcinek_pom << std::endl;
 			for (petla =0; petla<5; petla++)
-			{
-				start_petla = chrono::system_clock::now(); //time(0);
-				//std::cout << "Selection sort start: " << std::chrono::system_clock::to_time_t(start_petla) << std::endl;
+			{   start_petla = chrono::system_clock::now();
                 f_current_time("Part Ascending Merge Sort", "Start");
-
-					if (odcinek_pom == 0) { start_with=0;} else { start_with = temp_part_arraySize*odcinek_pom;}
-					cout << "petla: "<< petla+1 << std::endl;
-					cout << "start_with: "<< start_with << std::endl;
-					cout << "temp_arraySize: "<< temp_part_arraySize << std::endl;
+                start_with = temp_part_arraySize*odcinek_pom;
+                std::cout << "odcinek_pom: "<< odcinek_pom << "; petla: "<< petla <<"; " ;
+                cout << "start_with: "<< start_with << std::endl;
 
 				//	cout << "przepisanie danych\n";
 					for(i=0; i<temp_part_arraySize; i++)
 					{	temp_part_array[i] = local_arr[start_with]; start_with++; }
+                    cout << "temp_part_array: "<< temp_part_arraySize << std::endl;
 
 					MergeSort(temp_part_array, 0, temp_part_arraySize-1,direction);
 
-				stop_petla = chrono::system_clock::now(); //time(0);
-				//std::cout << "Selection sort end: " << std::chrono::system_clock::to_time_t(stop_petla)<< std::endl;
-                f_current_time("Part Ascending Merge Sort", "Stop");
-
-			    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_petla - start_petla).count() << "ms\n"<< std::endl;
+				stop_petla = chrono::system_clock::now();
+				f_current_time("Part Ascending Merge Sort", "Stop");
+                elapsed_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(stop_petla - start_petla).count();
+                std::cout << "odcinek_pom: "<< odcinek_pom << "; petla: "<< petla <<"; " ;
+                std::cout << "PartAscendingMergeSort elapsed time: " << elapsed_seconds << "ms\n"<< std::endl;
 			}
 			//cout << "MergeSort array: ";
 			//printArray(temp_part_array, temp_part_arraySize );
 		}
 	}
     else if (direction == 'D' && partsort =='Y')
-    {
-		int odcinek_pom =0, petla =0;
+    {   int odcinek_pom =0, petla =0;
 		//petla - odcinki
 		for (odcinek_pom =0; odcinek_pom<5; odcinek_pom++)
-		{
-			cout << "odcinek_pom: "<< odcinek_pom << std::endl;
+		{   cout << "odcinek_pom: "<< odcinek_pom << std::endl;
 			for (petla =0; petla<5; petla++)
-			{
-				start_petla = chrono::system_clock::now(); //time(0);
-				//std::cout << "Part Descending Merge sort start: " << std::chrono::system_clock::to_time_t(start_petla) << std::endl;
+			{   start_petla = chrono::system_clock::now();
                 f_current_time("Part Descending Merge Sort", "Start");
+                start_with = temp_part_arraySize*odcinek_pom;
+                std::cout << "odcinek_pom: "<< odcinek_pom << "; petla: "<< petla <<"; " ;
+                cout << "start_with: "<< start_with << std::endl;
 
-					if (odcinek_pom == 0) { start_with=0;} else { start_with = temp_part_arraySize*odcinek_pom;}
-					cout << "petla: "<< petla+1 << std::endl;
-					cout << "start_with: "<< start_with << std::endl;
-					cout << "temp_arraySize: "<< temp_part_arraySize << std::endl;
-
-					cout << "przepisanie danych\n";
+					//cout << "przepisanie danych\n";
 					for(i=0; i<temp_part_arraySize; i++)
 					{	temp_part_array[i] = local_arr[start_with]; start_with++; }
+                    cout << "temp_part_array: "<< temp_part_arraySize << std::endl;
 
 					MergeSort(temp_part_array, 0, temp_part_arraySize-1,direction);
-				stop_petla = chrono::system_clock::now(); //time(0);
-				//elapsed_seconds = stop_petla-start_petla;
-			    f_current_time("Part Descending Merge Sort", "Stop");
-                //std::cout << "Selection sort end: " << std::chrono::system_clock::to_time_t(stop_petla)<< std::endl;
-			    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_petla - start_petla).count() << "ms\n"<< std::endl;
+
+                stop_petla = chrono::system_clock::now();
+                f_current_time("Part Descending Merge Sort", "Stop");
+                elapsed_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(stop_petla - start_petla).count();
+                std::cout << "odcinek_pom: "<< odcinek_pom << "; petla: "<< petla <<"; " ;
+                std::cout << "PartDescendingMergeSort elapsed time: " << elapsed_seconds << "ms\n"<< std::endl;
 			}
 			//cout << "MergeSort array: ";
 			//printArray(temp_part_array, temp_part_arraySize );
 	    }
 	}
+	//delete [] temp_array;
 }
 //-------------------------------------------------------------------------------------------
 // main program
 int main()
 { 	char v_znak;
-	unsigned long total_numbers =200000, tmp_max_numbers =50000 ;
+	int total_numbers =220000, tmp_max_numbers =50000 ;
 	//total_numbers musi dzielic sie bez reszty przez 100000
-	unsigned long main_arr[total_numbers], temp_arr[total_numbers];
+
+	int *main_arr;
+	main_arr = new int[total_numbers]; //,
+	int *temp_arr;
+	temp_arr= new int[tmp_max_numbers];
 	int i,j,k;
-	//unsigned long main_arr[total_numbers] = {315,309,306,313,358,325,323,321, 115,9,6,13,58,25,23,21,
+	//int main_arr[total_numbers] = {315,309,306,313,358,325,323,321, 115,9,6,13,58,25,23,21,
 	//312,302,307,301,308,322,341,325, 12,2,7,1,8,22,41,25, 362,324,372,334,319,318,319,316, 62,24,72,34,19,18,119,116,
 	//323,321,312,320,317,311,328,341, 123,121,112,120,117,111,128,141, 325,362,358,324,372,334,314,318,
 	//125,162,158,124,172,134,114,118};
 	cout <<"Program start\n";
 
-	unsigned long arraySize = sizeof(main_arr)/sizeof(main_arr[0]);
+	int arraySize = total_numbers;//sizeof(main_arr)/sizeof(main_arr[0]);
 	double elapsed_seconds;
 	auto start_sort = chrono::system_clock::now();
 	auto stop_sort  = chrono::system_clock::now();
 	auto t_c        = std::chrono::system_clock::to_time_t(start_sort);
 
-	for (unsigned long i=0; i<total_numbers; i++)
-	{
-	    main_arr[i] = rand();
+	for (int i=0; i<total_numbers; i++)
+	{   main_arr[i] = rand();
 	    //cout << main_arr[i] << " ";
 	}
 
@@ -617,7 +644,7 @@ int main()
 					f_current_time("Ascending Selection Sort", "Start");
 
 						SelectionSortAsc(main_arr, arraySize);
-						cout << "main array size: "<<sizeof(main_arr)/sizeof(main_arr[0])<<endl;
+						cout << "main array size: "<< arraySize <<endl;
 					stop_sort = chrono::system_clock::now();
 				    f_current_time("Ascending Selection sort", "Stop");
 				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
@@ -630,10 +657,10 @@ int main()
 					f_current_time("Descending Selection Sort", "Start");
 
 						SelectionSortDesc(main_arr, arraySize);
-						cout << "main array size: "<<sizeof(main_arr)/sizeof(main_arr[0])<<endl;
+						cout << "main array size: "<< arraySize <<endl;
 					stop_sort = chrono::system_clock::now();
 					f_current_time("Descending Selection Sort", "Stop");
-					std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "s\n"<< std::endl;
+					std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
 					getch();
 				system("cls");
 				break;
@@ -643,10 +670,10 @@ int main()
 					f_current_time("Ascending Insertion Sort", "Start");
 
 						InsertionAscSort(main_arr, arraySize);
-						cout << "main array size: "<<sizeof(main_arr)/sizeof(main_arr[0])<<endl;
+						cout << "main array size: "<< arraySize <<endl;
 					stop_sort = chrono::system_clock::now();
 					f_current_time("Ascending Insertion Sort", "Stop");
-					std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "s\n"<< std::endl;
+					std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
 					getch();
 				system("cls");
 				break;
@@ -656,10 +683,10 @@ int main()
 					f_current_time("Descending Insertion Sort", "Start");
 
 						InsertionDescSort(main_arr, arraySize);
-						cout << "main array size: "<<sizeof(main_arr)/sizeof(main_arr[0])<<endl;
+						cout << "main array size: "<< arraySize <<endl;
 					stop_sort = chrono::system_clock::now();
 					f_current_time("Descending Insertion Sort", "Stop");
-				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "s\n"<< std::endl;
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
 					getch();
 				system("cls");
 				break;
@@ -667,33 +694,36 @@ int main()
 				//-------------------------------------------------------------------------------------------
 					start_sort = chrono::system_clock::now();
 					f_current_time("Ascending Merge Sort", "Start");
-                        if (arraySize > tmp_max_numbers)
+/*                        if (arraySize > tmp_max_numbers) //200.000 > 50.000
                         {i = arraySize/tmp_max_numbers; }
                         else {i = 1; }
                         cout << "i: " << i << endl;
-                        for (k=0; k<i; k++)
+                        for (k=0; k<i; k++) //ilosc czesci (petli)
                         {   cout << "k: " << k << endl;
                             j=0;
-                            for (j=0; j<(tmp_max_numbers-1)*(k+1); j++)
+                            for (j=0; j<tmp_max_numbers; j++)
                             {   //przepisanie czesci tablicy do tymczasowej tablicy
-                                temp_arr[j]=main_arr[j+((tmp_max_numbers-1)*(k+1))];
+                                temp_arr[j]=main_arr[j+(tmp_max_numbers-1)*k]; //200.000
                             }
-
-                            MergeSortArray(temp_arr, tmp_max_numbers,'A','N');
+                                cout << tmp_max_numbers << endl;
+                                MergeSortArray(temp_arr, tmp_max_numbers,'A','N');
                         }
-						cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
+*/
+                    MergeSortArray(main_arr, arraySize,'A','N');
+                    cout << "main array size: "<< arraySize << endl;
 
 					stop_sort = chrono::system_clock::now();
 					f_current_time("Ascending Merge Sort", "Stop");
 					std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
 					getch();
+					delete [] temp_arr;
 				system("cls");
 				break;
 			case '6':
 				//-------------------------------------------------------------------------------------------
 					start_sort = chrono::system_clock::now();
 					f_current_time("Descending Merge Sort", "Start");
-                        if (arraySize > tmp_max_numbers)
+/*                        if (arraySize > tmp_max_numbers)
                         {i = arraySize/tmp_max_numbers; }
                         else {i = 1; }
                         cout << "i: " << i << endl;
@@ -706,7 +736,10 @@ int main()
                             }
                             MergeSortArray(temp_arr, tmp_max_numbers,'D','N');
                         }
-						cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
+						cout << "main array size: "<< arraySize << endl;
+*/
+					MergeSortArray(main_arr, arraySize,'D','N');
+					cout << "main array size: "<< arraySize << endl;
 					stop_sort = chrono::system_clock::now();
 					f_current_time("Descending Merge Sort", "Stop");
 					std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
@@ -719,11 +752,11 @@ int main()
 					f_current_time("Part Ascending Selection Sort", "Start");
 
 						PartSelectionSortAsc(main_arr, arraySize);
-						cout << "main array size: "<<sizeof(main_arr)/sizeof(main_arr[0])<<endl;
+						cout << "main array size: "<< arraySize <<endl;
 
 					stop_sort = chrono::system_clock::now();
 					f_current_time("Part Ascending Selection Sort", "Stop");
-				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "s\n"<< std::endl;
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
 					getch();
 				system("cls");
 				break;
@@ -733,11 +766,11 @@ int main()
 					f_current_time("Part Descending Selection Sort", "Start");
 
 						PartSelectionSortDesc(main_arr, arraySize);
-						cout << "main array size: "<<sizeof(main_arr)/sizeof(main_arr[0])<<endl;
+						cout << "main array size: "<< arraySize <<endl;
 
 					stop_sort = chrono::system_clock::now();
 					f_current_time("Part Descending Selection Sort", "Stop");
-				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "s\n"<< std::endl;
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
 					getch();
 				system("cls");
 				break;
@@ -747,11 +780,11 @@ int main()
 					f_current_time("Part Ascending Insertion Sort", "Start");
 
 						PartInsertionSortAsc(main_arr, arraySize);
-						cout << "main array size: "<<sizeof(main_arr)/sizeof(main_arr[0])<<endl;
+						cout << "main array size: "<< arraySize <<endl;
 
 					stop_sort = chrono::system_clock::now();
 					f_current_time("Part Ascending Insertion Sort", "Stop");
-				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort- start_sort).count() << "s\n"<< std::endl;
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort- start_sort).count() << "ms\n"<< std::endl;
 					getch();
 				system("cls");
 				break;
@@ -761,11 +794,11 @@ int main()
 					f_current_time("Part Descending Insertion Sort", "Start");
 
 						PartInsertionSortDesc(main_arr, arraySize);
-						cout << "main array size: "<<sizeof(main_arr)/sizeof(main_arr[0])<<endl;
+						cout << "main array size: "<< arraySize <<endl;
 
 					stop_sort = chrono::system_clock::now();
 					f_current_time("Part Descending Insertion Sort", "Stop");
-				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "s\n"<< std::endl;
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
 					getch();
 				system("cls");
 				break;
@@ -775,11 +808,11 @@ int main()
 					f_current_time("Part Ascending Merge Sort", "Start");
 
 						MergeSortArray(main_arr, arraySize,'A','Y');
-						cout << "main array size: "<<sizeof(main_arr)/sizeof(main_arr[0])<<endl;
+						cout << "main array size: "<< arraySize <<endl;
 
 					stop_sort = chrono::system_clock::now();
 					f_current_time("Part Ascending Merge Sort", "Stop");
-				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "s\n"<< std::endl;
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
 					getch();
 				system("cls");
 				break;
@@ -789,11 +822,11 @@ int main()
 					f_current_time("Part Descending Merge Sort", "Start");
 
 						MergeSortArray(main_arr, arraySize,'D','Y');
-						cout << "main array size: "<<sizeof(main_arr)/sizeof(main_arr[0])<<endl;
+						cout << "main array size: "<< arraySize <<endl;
 
 					stop_sort = chrono::system_clock::now();
 					f_current_time("Part Descending Merge Sort", "Stop");
-				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "s\n"<< std::endl;
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
 					getch();
 				system("cls");
 				break;
@@ -807,6 +840,7 @@ int main()
 		}
 	} while (v_znak!='W');
 //-------------------------------------------------------------------------------------------
+    delete [] main_arr;
 	return 0;
 }
 
