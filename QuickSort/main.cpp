@@ -272,6 +272,8 @@ int partition(int *tab, int pivot_item, int r, char direction)
 {   int pivot = tab[pivot_item];    // pivot
     int i = pivot_item;             // nr elementu w tablicy
     int j = r;                      //r=right(koncowy element tablicy)
+    printArray(tab, r );
+
     while(true)
     {   if (direction =='A')
             {   //wyznaczanie pierwszej liczby mniejszej od pivota.
@@ -325,6 +327,76 @@ void QuickSort(int *tab, int arraySize, int p, int r, char direction)
         cout << "QuickSort array after: ";
         printArray(temp_array, arraySize );
     }
+    return;
+}
+//-------------------------------------------------------------------------------------------
+void swapLE(int* a, int* b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+/* This function takes last element as pivot,
+   places the pivot element at its correct
+   position in sorted  array, and places
+   all smaller (smaller than pivot) to left
+   of pivot and all greater elements to
+   right of pivot */
+int partitionLE(int arr[], int l, int h, char direction)
+{
+    int x = arr[h];
+    int i = (l - 1);
+    int j;
+
+    if (direction =='A')
+    {   for ( j = l; j <= h - 1; j++)
+        {   if (arr[j] <= x)
+            {   i++;
+                swapLE(&arr[i], &arr[j]);
+            }
+        }
+    } else
+    {   for ( j = h; j >= l; j--)
+        {   if (arr[i] >= x)
+            {   j--;
+                swapLE(&arr[j], &arr[i]);
+            }
+        }
+    }
+
+    swapLE(&arr[i + 1], &arr[h]);
+    return (i + 1);
+}
+//-------------------------------------------------------------------------------------------
+void QuickSortUnifiedLE(int *A, int l, int h, char direction)
+{
+    if (l < h)
+    {   /* Partitioning index */
+        int p = partitionLE(A, l, h,direction);
+        QuickSortUnifiedLE(A, l, p - 1, direction);
+        QuickSortUnifiedLE(A, p + 1, h, direction);
+    }
+}
+//-------------------------------------------------------------------------------------------
+void QuickSortLE(int *tab, int arraySize, int p, int r, char direction)
+{   int temp_array[arraySize];
+
+    if (p < r)
+    {   for (int i=0; i<arraySize; i++)
+		{temp_array[i] = *tab; tab++;	}
+		//cout << "p: "<< p <<" r: "<< r <<endl;
+        //cout << "QuickSort Last element array before: ";
+        //printArray(temp_array, arraySize );
+        if (direction =='A')
+            {QuickSortUnifiedLE (temp_array, p, r ,'A');  }
+        else
+            {QuickSortUnifiedLE (temp_array, p, r ,'D' ); }
+
+        cout << "QuickSort Last element  array after: ";
+        printArray(temp_array, arraySize );
+    }
+    else{cout << "p > r: "<< p <<" > "<< r << endl; }
     return;
 }
 //-------------------------------------------------------------------------------------------
@@ -559,6 +631,79 @@ void PartHeapSort(int *tab, int arraySize, char direction)
     delete [] temp_part_array;
 }
 //-------------------------------------------------------------------------------------------
+
+/* This function takes medium element as pivot,
+   places the pivot element at its correct
+   position in sorted  array, and places
+   all smaller (smaller than pivot) to left
+   of pivot and all greater elements to
+   right of pivot */
+int partitionRE(int tab[], int l, int h, char direction)
+{
+    int pivot_element = ceil((l+h)/2);
+    int pivot = tab[pivot_element];
+    int i = l ; //0
+    int j = h ; //10
+
+    while(true)
+    {   if (direction =='A')
+            {   //wyznaczanie pierwszej liczby mniejszej od pivota.
+                while (tab[i] < pivot)
+                { i++;        }
+                //wyznaczanie pierwszej liczby wiekszej od pivota.
+                while (tab[j] > pivot)
+                { j--;         }
+            }
+        else
+        {       while (tab[i] > pivot)
+                {   i++;    }
+                while (tab[j] < pivot)
+                { j--;         }
+        }
+        //jezeli obie liczby (mniejsza i wieksza) istnieja to zamien je miejscami
+        if (i < j)
+        { int temp = tab[i];
+            tab[i] = tab[j];
+            tab[j] = temp;
+            i++;
+            j--;
+        }
+        else
+        { return j;        }
+    }
+}
+//-------------------------------------------------------------------------------------------
+void QuickSortUnifiedRE(int *A, int l, int h, char direction)
+{
+    if (l < h)
+    {   /* Partitioning index */
+        int p = partitionRE(A, l, h,direction);
+        QuickSortUnifiedRE(A, l, p - 1, direction);
+        QuickSortUnifiedRE(A, p + 1, h, direction);
+    }
+}
+//-------------------------------------------------------------------------------------------
+void QuickSortRE(int *tab, int arraySize, int p, int r, char direction)
+{   int temp_array[arraySize];
+
+    if (p < r)
+    {   for (int i=0; i<arraySize; i++)
+		{temp_array[i] = *tab; tab++;	}
+		//cout << "p: "<< p <<" r: "<< r <<endl;
+        //cout << "QuickSort Last element array before: ";
+        //printArray(temp_array, arraySize );
+        if (direction =='A')
+            {QuickSortUnifiedRE (temp_array, p, r ,'A');  }
+        else
+            {QuickSortUnifiedRE (temp_array, p, r ,'D' ); }
+
+        cout << "QuickSort Last element  array after: ";
+        printArray(temp_array, arraySize );
+    }
+    else{cout << "p > r: "<< p <<" > "<< r << endl; }
+    return;
+}
+//-------------------------------------------------------------------------------------------
 // main program
 int main()
 { 	char v_znak;
@@ -699,7 +844,7 @@ int main()
 					start_sort = time(0);
 					std::cout << "QuikSort DESC start: " << std::ctime(&start_sort) << std::endl;
 
-						QuickSort(main_arr,arraySize,arraySize/2,total_numbers-1,'D'); // wywolanie funkcji sortujacej - pivotem jest srodkowy element
+						QuickSort(main_arr,arraySize,arraySize,total_numbers-1,'D'); // wywolanie funkcji sortujacej - pivotem jest srodkowy element
 						//cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 
 					stop_sort = time(0);
@@ -714,7 +859,7 @@ int main()
 					start_sort = time(0);
 					std::cout << "QuikSort Asc start: " << std::ctime(&start_sort) << std::endl;
 
-						QuickSort(main_arr,arraySize,arraySize,total_numbers-1,'A'); // wywolanie funkcji sortujacej - pivotem jest ostatni element
+						QuickSortLE(main_arr,arraySize,0,total_numbers-1,'A'); // wywolanie funkcji sortujacej - pivotem jest ostatni element
 						//cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 
 					stop_sort = time(0);
@@ -729,7 +874,7 @@ int main()
 					start_sort = time(0);
 					std::cout << "QuikSort DESC start: " << std::ctime(&start_sort) << std::endl;
 
-						QuickSort(main_arr,arraySize,arraySize,total_numbers-1,'D'); // wywolanie funkcji sortujacej - pivotem jest ostatni element
+						QuickSortLE(main_arr,arraySize,0,total_numbers-1,'D'); // wywolanie funkcji sortujacej - pivotem jest ostatni element
 						//cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 
 					stop_sort = time(0);

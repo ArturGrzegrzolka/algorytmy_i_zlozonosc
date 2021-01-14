@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1610271867 source:c:\users\artur\documents\wsm_repo\algorytmy_i_zlozonosc\saylor_org\main.cpp
+	<iostream>
+	<bits/stdc++.h>
+
