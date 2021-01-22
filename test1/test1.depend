@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1610642563 source:c:\users\artur\documents\wsm_repo\algorytmy_i_zlozonosc\test1\main.cpp
+	<cstdlib>
+	<iostream>
+

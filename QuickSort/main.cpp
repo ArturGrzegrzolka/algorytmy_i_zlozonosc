@@ -6,7 +6,7 @@
 #include <time.h>
 #include <windows.h>
 #include <conio.h>
-
+#include <unistd.h>
 
 using namespace std;
 
@@ -38,44 +38,15 @@ void swap(int *xp, int *yp)
 	*yp = temp;
 }
 
-
-//-------------------------------------------------------------------------------------------
-//InsertionDescSort
-//-------------------------------------------------------------------------------------------
-void InsertionDescSort(int main_arr[], int arraySize)
-{
-	int temp_array[arraySize];
-    int i, j, temp;
-
-	for (i=0; i<arraySize; i++)
-	{temp_array[i] = main_arr[i];	}
-
-    for (i = 1; i < arraySize; i++)
-    {  	temp = temp_array[i];
-        j = i;
-
-        /* Move elements of arr[0..i-1], that are
-        greater than min, to one position ahead
-        of their current position */
-        while (j > 0 && temp >= temp_array[j-1] && j < arraySize)
-        {
-            temp_array[j] = temp_array[j-1];
-            j = j - 1;
-        }
-        temp_array[j] = temp;
-    }
-	//cout << "InsertionDesc array: \n";
-	//printArray(temp_array, arraySize );
-}
 //-------------------------------------------------------------------------------------------
 // merge sort
 //-------------------------------------------------------------------------------------------
 // Merges two subarrays of arr[].
 // First subarray is arr[l..m]
 // Second subarray is arr[m+1..r]
-void MergeAsc(int arr[], int left, int m, int right)
+void MergeAsc(int *arr, int left, int m, int right)
 {
-    int arraySize = sizeof(arr)/sizeof(arr[0]);
+//    int arraySize = sizeof(arr)/sizeof(arr[0]);
     int n1 = m - left + 1;
     int n2 = right - m;
 
@@ -99,16 +70,19 @@ void MergeAsc(int arr[], int left, int m, int right)
     // Initial index of merged subarray
     int k = left;
 
-    while (i < n1 && j < n2) {
-        if (L[i] <= R[j]) {
-            arr[k] = L[i];
-            i++;
-        }
+    while (i < n1 && j < n2)
+        {
+            if (L[i] <= R[j])
+            {
+                arr[k] = L[i];
+                i++;
+            }
         else {
-            arr[k] = R[j];
-            j++;
-        }
+                arr[k] = R[j];
+                j++;
+            }
         k++;
+        usleep(1);
     }
     // Copy the remaining elements of
     // L[], if there are any
@@ -123,30 +97,39 @@ void MergeAsc(int arr[], int left, int m, int right)
         arr[k] = R[j];
         j++;
         k++;
+        usleep(1);
     }
 }
 //-------------------------------------------------------------------------------------------
-void MergeDesc(int a[], int low, int mid, int high )
+void MergeDesc(int *arr, int low, int mid, int high )
 {	int i=low,j=mid+1,k=0;
 	int temp[high-low+1];
 
 	while(i<=mid && j<= high)
-	{	if(a[i]>a[j])               //comparison step
-	        temp[k++]=a[i++];
+	{	if(arr[i]>arr[j])               //comparison step
+	    {
+	        temp[k++]=arr[i++];
+	    }
 	    else
-	        temp[k++]=a[j++];
+        {
+            temp[k++]=arr[j++];
+        }
+    usleep(1);
 	}
 	while(i<=mid)
 	    {
-	        temp[k++]=a[i++];
+	        temp[k++]=arr[i++];
+            usleep(1);
 	    }
 	while(j<=high)
 	    {
-	        temp[k++]=a[j++];
+	        temp[k++]=arr[j++];
+            usleep(1);
 	    }
 	for(i=low;i<=high;i++)
 	{
-	    a[i]=temp[i-low];
+	    arr[i]=temp[i-low];
+        usleep(1);
 	}
 	return;
 }
@@ -154,7 +137,7 @@ void MergeDesc(int a[], int low, int mid, int high )
 // left is for left index and r is
 // right index of the sub-array
 // of arr to be sorted */
-void MergeSort(int array[],int left,int right, char direction)
+void MergeSort(int *arr ,int left,int right, char direction)
 {
     if(left>=right)
 	{	return;//returns recursively
@@ -162,18 +145,18 @@ void MergeSort(int array[],int left,int right, char direction)
 
     int mid = left+(right-left)/2;
     if (direction == 'A')
-    {	MergeSort(array,left,mid,'A');
-	    MergeSort(array,mid+1,right,'A');
-	    MergeAsc(array,left,mid,right);
+    {	MergeSort(arr,left,mid,'A');
+	    MergeSort(arr,mid+1,right,'A');
+	    MergeAsc(arr,left,mid,right);
 	}
 	else
-    {	MergeSort(array,left,mid,'D');
-	    MergeSort(array,mid+1,right,'D');
-	    MergeDesc(array,left,mid,right);
+    {	MergeSort(arr,left,mid,'D');
+	    MergeSort(arr,mid+1,right,'D');
+	    MergeDesc(arr,left,mid,right);
 	}
 }
 
-void MergeSortArray(int local_arr[], int localarraySize, char direction, char partsort)
+void MergeSortArray(int *local_arr, int localarraySize, char direction, char partsort)
 {
 	int temp_array[localarraySize];
 	int i, start_with;
@@ -188,7 +171,8 @@ void MergeSortArray(int local_arr[], int localarraySize, char direction, char pa
 	if (direction == 'A' && partsort =='N')
     {
 		for (i=0; i<localarraySize; i++)
-		{temp_array[i] = local_arr[i];	}
+		{temp_array[i] = *local_arr; local_arr++;	}
+
 		MergeSort(temp_array, 0, localarraySize-1,'A');
 		cout << "MergeSort array size : "<<localarraySize <<endl;
 		//cout << "MergeSort array: ";
@@ -197,7 +181,8 @@ void MergeSortArray(int local_arr[], int localarraySize, char direction, char pa
 	else if (direction == 'D' && partsort =='N')
     {
 		for (i=0; i<localarraySize; i++)
-		{temp_array[i] = local_arr[i];	}
+		{temp_array[i] = *local_arr; local_arr++;	}
+
 		MergeSort(temp_array, 0, localarraySize-1,'D');
 		cout << "MergeSort array size : "<<localarraySize <<endl;
 		//cout << "MergeSort array: ";
@@ -223,8 +208,10 @@ void MergeSortArray(int local_arr[], int localarraySize, char direction, char pa
 				//	cout << "przepisanie danych\n";
 					for(i=0; i<temp_part_arraySize; i++)
 					{	temp_part_array[i] = local_arr[start_with]; start_with++; }
+                    std::cout << "zaczynam od : "<< start_with << " elementu tj :" << temp_array[start_with]<< std::endl;
 
 					MergeSort(temp_part_array, 0, temp_part_arraySize-1,'A');
+                    cout << "MergeSort array size : "<<localarraySize <<endl;
 
 				stop_petla = time(0);
 				elapsed_seconds = stop_petla-start_petla;
@@ -257,6 +244,8 @@ void MergeSortArray(int local_arr[], int localarraySize, char direction, char pa
 					{	temp_part_array[i] = local_arr[start_with]; start_with++; }
 
 					MergeSort(temp_part_array, 0, temp_part_arraySize-1,'D');
+                    cout << "MergeSort array size : "<<localarraySize <<endl;
+
 				stop_petla = time(0);
 				elapsed_seconds = stop_petla-start_petla;
 			    std::cout << "Selection sort end: " << std::ctime(&stop_petla)<< std::endl;
@@ -268,142 +257,106 @@ void MergeSortArray(int local_arr[], int localarraySize, char direction, char pa
 	}
 }
 //-------------------------------------------------------------------------------------------
-int partition(int *tab, int pivot_item, int r, char direction)
-{   int pivot = tab[pivot_item];    // pivot
-    int i = pivot_item;             // nr elementu w tablicy
-    int j = r;                      //r=right(koncowy element tablicy)
-    printArray(tab, r );
+int partition(int *arr, int low, int high, char direction)
+{
+    // pivot
+    int pivot = arr[high];
+    //cout << "pivot: " << pivot << endl;
+    // Index of smaller element
+    int i;
 
-    while(true)
-    {   if (direction =='A')
-            {   //wyznaczanie pierwszej liczby mniejszej od pivota.
-                while (tab[i] < pivot)
-                { i++;        }
-                //wyznaczanie pierwszej liczby wiekszej od pivota.
-                while (tab[j] > pivot)
-                { j--;         }
+    if (direction =='A')
+    {   i = (low - 1);
+        for (int j = low; j <= high - 1; j++)
+        {   // If current element is smaller
+            // than or equal to pivot
+            if (arr[j] <= pivot)
+            {   // increment index of
+                // smaller element
+                i++;
+                swap(arr[i], arr[j]);
+                usleep(1);
             }
-        else
-        {       while (tab[i] > pivot)
-                {   i++;    }
-                while (tab[j] < pivot)
-                { j--;         }
         }
-        //jezeli obie liczby (mniejsza i wieksza) istnieja to zamien je miejscami
-        if (i < j)
-        { int temp = tab[i];
-            tab[i] = tab[j];
-            tab[j] = temp;
-            i++;
-            j--;
+        swap(arr[i + 1], arr[high]);
+    }
+    else
+    {   i = (low - 1);
+        for (int j = low; j <= high - 1; j++)
+        {   // If current element is smaller
+            // than or equal to pivot
+            if (arr[j] >= pivot)
+            {   // decrement index of
+                // highest element
+                i++;
+                swap(arr[i], arr[j]);
+                usleep(1);
+            }
         }
-        else
-        { return j;        }
+        swap(arr[i + 1], arr[high]);
+    }
+    return (i + 1);
+}
+//-------------------------------------------------------------------------------------------
+// Generates Random Pivot, swaps pivot with
+// end element and calls the partition function
+int partition_r(int *arr, int low, int high, char pivot_element, char direction)
+{   // Generate a random number in between
+    // low .. high
+    //srand(time(NULL));
+    //int random = low + rand() % (high - low);
+    int random;
+
+    if (pivot_element =='R')
+        random = high; // + rand() % (high - low);
+    else if (pivot_element =='M')
+        random = ceil(high/2); // + rand() % (high - low);
+    else if (pivot_element =='L')
+        random = low;
+
+    // Swap A[random] with A[high]
+    swap(arr[random], arr[high]);
+
+    return partition(arr, low, high, direction);
+}
+//-------------------------------------------------------------------------------------------
+void QuickSortUnified(int *arr, int low, int high, char pivot_element, char direction)
+{
+    if (low < high) {
+
+        int pi = partition_r(arr, low, high, pivot_element, direction);
+
+        // Separately sort elements before
+        // partition and after partition
+        QuickSortUnified(arr, low, pi - 1, pivot_element, direction);
+        QuickSortUnified(arr, pi + 1, high, pivot_element, direction);
     }
 }
 //-------------------------------------------------------------------------------------------
-void QuickSortUnified(int *tab, int p, int r, char direction)
-{   if (p < r)
-    {   int q = partition(tab, p, r, direction);
-        QuickSortUnified(tab, p, q, direction);
-        QuickSortUnified(tab, q + 1, r, direction);
-    }
-}
-//-------------------------------------------------------------------------------------------
-void QuickSort(int *tab, int arraySize, int p, int r, char direction)
+void QuickSort(int *tab, int left, int rigth, int arraySize, char direction, char pivot_element)
 {   int temp_array[arraySize];
 
-    if (p < r)
+    if (left < rigth)
     {   for (int i=0; i<arraySize; i++)
 		{temp_array[i] = *tab; tab++;	}
 		//cout << "p: "<< p <<" r: "<< r <<endl;
         //cout << "QuickSort array before: ";
         //printArray(temp_array, arraySize );
         if (direction =='A')
-            {QuickSortUnified (temp_array, p, r ,'A');  }
+            {QuickSortUnified (temp_array, left, rigth, pivot_element, direction );  }
         else
-            {QuickSortUnified (temp_array, p, r ,'D' ); }
+            {QuickSortUnified (temp_array, left, rigth, pivot_element, direction ); }
 
-        cout << "QuickSort array after: ";
-        printArray(temp_array, arraySize );
-    }
-    return;
-}
-//-------------------------------------------------------------------------------------------
-void swapLE(int* a, int* b)
-{
-    int temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
-/* This function takes last element as pivot,
-   places the pivot element at its correct
-   position in sorted  array, and places
-   all smaller (smaller than pivot) to left
-   of pivot and all greater elements to
-   right of pivot */
-int partitionLE(int arr[], int l, int h, char direction)
-{
-    int x = arr[h];
-    int i = (l - 1);
-    int j;
-
-    if (direction =='A')
-    {   for ( j = l; j <= h - 1; j++)
-        {   if (arr[j] <= x)
-            {   i++;
-                swapLE(&arr[i], &arr[j]);
-            }
-        }
-    } else
-    {   for ( j = h; j >= l; j--)
-        {   if (arr[i] >= x)
-            {   j--;
-                swapLE(&arr[j], &arr[i]);
-            }
-        }
-    }
-
-    swapLE(&arr[i + 1], &arr[h]);
-    return (i + 1);
-}
-//-------------------------------------------------------------------------------------------
-void QuickSortUnifiedLE(int *A, int l, int h, char direction)
-{
-    if (l < h)
-    {   /* Partitioning index */
-        int p = partitionLE(A, l, h,direction);
-        QuickSortUnifiedLE(A, l, p - 1, direction);
-        QuickSortUnifiedLE(A, p + 1, h, direction);
-    }
-}
-//-------------------------------------------------------------------------------------------
-void QuickSortLE(int *tab, int arraySize, int p, int r, char direction)
-{   int temp_array[arraySize];
-
-    if (p < r)
-    {   for (int i=0; i<arraySize; i++)
-		{temp_array[i] = *tab; tab++;	}
-		//cout << "p: "<< p <<" r: "<< r <<endl;
-        //cout << "QuickSort Last element array before: ";
+        //cout << "QuickSort array after: ";
         //printArray(temp_array, arraySize );
-        if (direction =='A')
-            {QuickSortUnifiedLE (temp_array, p, r ,'A');  }
-        else
-            {QuickSortUnifiedLE (temp_array, p, r ,'D' ); }
-
-        cout << "QuickSort Last element  array after: ";
-        printArray(temp_array, arraySize );
     }
-    else{cout << "p > r: "<< p <<" > "<< r << endl; }
     return;
 }
 //-------------------------------------------------------------------------------------------
 void PartQuickSort(int *tab, int arraySize, char direction)
 {
 	int i, start_with;
-	int temp_part_arraySize = arraySize/5;
+	int temp_part_arraySize = ceil(arraySize/5);
 	int temp_part_array[temp_part_arraySize];
 	double elapsed_seconds;
 	time_t start_petla = time(0);
@@ -429,7 +382,7 @@ void PartQuickSort(int *tab, int arraySize, char direction)
 			for (petla =0; petla<5; petla++)
 			{
 				start_petla = time(0);
-				std::cout << "QuickSort start: " << std::ctime(&start_petla) << std::endl;
+				std::cout << "PartQuickSort start: " << std::ctime(&start_petla) << std::endl;
 
 					if (odcinek_pom == 0) { start_with=0;} else { start_with = temp_part_arraySize*odcinek_pom;}
 					cout << "petla: "<< petla+1 << std::endl;
@@ -440,11 +393,11 @@ void PartQuickSort(int *tab, int arraySize, char direction)
 					for(i=0; i<temp_part_arraySize; i++)
 					{	temp_part_array[i] = tab[start_with]; start_with++; }
 
-                    QuickSortUnified (temp_part_array, 0, temp_part_arraySize ,'A');
+                    QuickSortUnified (temp_part_array, 0, temp_part_arraySize ,'R', 'A');
 
 				stop_petla = time(0);
 				elapsed_seconds = stop_petla-start_petla;
-			    std::cout << "Selection sort end: " << std::ctime(&stop_petla)<< std::endl;
+			    std::cout << "PartQuickSort end: " << std::ctime(&stop_petla)<< std::endl;
 			    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
 			}
 		}
@@ -459,7 +412,7 @@ void PartQuickSort(int *tab, int arraySize, char direction)
 			for (petla =0; petla<5; petla++)
 			{
 				start_petla = time(0);
-				std::cout << "QuickSort start: " << std::ctime(&start_petla) << std::endl;
+				std::cout << "PartQuickSort start: " << std::ctime(&start_petla) << std::endl;
 
 					if (odcinek_pom == 0) { start_with=0;} else { start_with = temp_part_arraySize*odcinek_pom;}
 					cout << "petla: "<< petla+1 << std::endl;
@@ -470,25 +423,24 @@ void PartQuickSort(int *tab, int arraySize, char direction)
 					for(i=0; i<temp_part_arraySize; i++)
 					{	temp_part_array[i] = tab[start_with]; start_with++; }
 
-                    QuickSortUnified (temp_part_array, 0, temp_part_arraySize, 'D');
+                    QuickSortUnified (temp_part_array, 0, temp_part_arraySize, 'R', 'D');
 
 				stop_petla = time(0);
 				elapsed_seconds = stop_petla-start_petla;
-			    std::cout << "QuickSort end: " << std::ctime(&stop_petla)<< std::endl;
+			    std::cout << "PartQuickSort end: " << std::ctime(&stop_petla)<< std::endl;
 			    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
 			}
 	    }
 	}
-    cout << "QuickSort array after: ";
-    printArray(temp_part_array, temp_part_arraySize );
-    delete [] temp_part_array;
+    //cout << "PartQuickSort array after: ";
+    //printArray(temp_part_array, temp_part_arraySize );
     return;
 }
 
 //-------------------------------------------------------------------------------------------
 // To heapify a subtree rooted with node i which is
 // an index in arr[]. n is size of heap
-void heapify(int arr[], int n, int i, char direction)
+void heapify(int *arr, int n, int i, char direction)
 {
     int largest = i; // Initialize largest as root
     int smallest = i; // Initialize smalles as root
@@ -507,6 +459,7 @@ void heapify(int arr[], int n, int i, char direction)
         {   swap(arr[i], arr[largest]);
             // Recursively heapify the affected sub-tree
             heapify(arr, n, largest,direction);
+            usleep(1);
         }
     }
     else
@@ -522,12 +475,13 @@ void heapify(int arr[], int n, int i, char direction)
         {   swap(arr[i], arr[smallest]);
             // Recursively heapify the affected sub-tree
             heapify(arr, n, smallest,direction);
+            usleep(1);
         }
     }
 }
 
 // main function to do heap sort
-void heapSort(int * arr, int n, char direction)
+void heapSort(int *arr, int n, char direction)
 {
     // Build heap (rearrange array)
     for (int i = n / 2 - 1; i >= 0; i--)
@@ -541,9 +495,8 @@ void heapSort(int * arr, int n, char direction)
         // call max heapify on the reduced heap
         heapify(arr, i, 0,direction);
     }
-    cout << "QuickSort array after: ";
-    printArray(arr, n );
-    delete [] arr;
+    //cout << "heapSort array after: ";
+    //printArray(arr, n );
 }
 //-------------------------------------------------------------------------------------------
 void PartHeapSort(int *tab, int arraySize, char direction)
@@ -625,93 +578,19 @@ void PartHeapSort(int *tab, int arraySize, char direction)
 			}
 	    }
 	}
-    cout << "QuickSort array after: ";
+    cout << "HeapSort array after: ";
     printArray(temp_part_array, temp_part_arraySize );
-    return;
-    delete [] temp_part_array;
-}
-//-------------------------------------------------------------------------------------------
-
-/* This function takes medium element as pivot,
-   places the pivot element at its correct
-   position in sorted  array, and places
-   all smaller (smaller than pivot) to left
-   of pivot and all greater elements to
-   right of pivot */
-int partitionRE(int tab[], int l, int h, char direction)
-{
-    int pivot_element = ceil((l+h)/2);
-    int pivot = tab[pivot_element];
-    int i = l ; //0
-    int j = h ; //10
-
-    while(true)
-    {   if (direction =='A')
-            {   //wyznaczanie pierwszej liczby mniejszej od pivota.
-                while (tab[i] < pivot)
-                { i++;        }
-                //wyznaczanie pierwszej liczby wiekszej od pivota.
-                while (tab[j] > pivot)
-                { j--;         }
-            }
-        else
-        {       while (tab[i] > pivot)
-                {   i++;    }
-                while (tab[j] < pivot)
-                { j--;         }
-        }
-        //jezeli obie liczby (mniejsza i wieksza) istnieja to zamien je miejscami
-        if (i < j)
-        { int temp = tab[i];
-            tab[i] = tab[j];
-            tab[j] = temp;
-            i++;
-            j--;
-        }
-        else
-        { return j;        }
-    }
-}
-//-------------------------------------------------------------------------------------------
-void QuickSortUnifiedRE(int *A, int l, int h, char direction)
-{
-    if (l < h)
-    {   /* Partitioning index */
-        int p = partitionRE(A, l, h,direction);
-        QuickSortUnifiedRE(A, l, p - 1, direction);
-        QuickSortUnifiedRE(A, p + 1, h, direction);
-    }
-}
-//-------------------------------------------------------------------------------------------
-void QuickSortRE(int *tab, int arraySize, int p, int r, char direction)
-{   int temp_array[arraySize];
-
-    if (p < r)
-    {   for (int i=0; i<arraySize; i++)
-		{temp_array[i] = *tab; tab++;	}
-		//cout << "p: "<< p <<" r: "<< r <<endl;
-        //cout << "QuickSort Last element array before: ";
-        //printArray(temp_array, arraySize );
-        if (direction =='A')
-            {QuickSortUnifiedRE (temp_array, p, r ,'A');  }
-        else
-            {QuickSortUnifiedRE (temp_array, p, r ,'D' ); }
-
-        cout << "QuickSort Last element  array after: ";
-        printArray(temp_array, arraySize );
-    }
-    else{cout << "p > r: "<< p <<" > "<< r << endl; }
     return;
 }
 //-------------------------------------------------------------------------------------------
 // main program
 int main()
 { 	char v_znak;
-	//int total_numbers =180000;
-	//int main_arr[total_numbers];
+	int total_numbers =160000;
+	int main_arr[total_numbers];
 
-	int total_numbers =10;
-	int main_arr[total_numbers] = { 315,309,306,313,358,325,323,321,115,9};
+	//int total_numbers =10;
+	//int main_arr[total_numbers] = { 315,309,306,313,358,325,323,321,115,9};
 	/*,
                                     389,211,1  ,18 ,69 ,169,7  ,114,118,269,
                                     6  ,13 ,58 ,25 ,23 ,21 ,512,302,307,301,
@@ -730,12 +609,11 @@ int main()
 	time_t stop_sort = time(0);
 	double elapsed_seconds; // = stop_sort-start_sort;
 
-/*	for (int i=0; i<total_numbers; i++)
+	for (int i=0; i<total_numbers; i++)
 	{
-	    main_arr[i] = rand();
+	    main_arr[i] = rand() % 500000 + 100;
 	    //cout << main_arr[i] << " ";
 	}
-*/
 
 	do
 	{
@@ -769,8 +647,8 @@ int main()
 					start_sort = time(0);
 					std::cout << "MergeSort ASC start: " << std::ctime(&start_sort) << std::endl;
 
-						MergeSortArray(main_arr, arraySize,'A','N');
 						cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
+						MergeSortArray(main_arr, arraySize,'A','N');
 
 					stop_sort = time(0);
 					elapsed_seconds = stop_sort-start_sort;
@@ -784,8 +662,8 @@ int main()
 					start_sort = time(0);
 					std::cout << "MergeSort DESC start: " << std::ctime(&start_sort) << std::endl;
 
+                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 						MergeSortArray(main_arr, arraySize,'D','N');
-						cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 
 					stop_sort = time(0);
 					elapsed_seconds = stop_sort-start_sort;
@@ -799,8 +677,8 @@ int main()
 					start_sort = time(0);
 					std::cout << "QuikSort Asc start: " << std::ctime(&start_sort) << std::endl;
 
-						QuickSort(main_arr,arraySize,0,total_numbers-1,'A'); // wywolanie funkcji sortujacej - pivotem jest pierwszy element
-						//cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
+						cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
+						QuickSort(main_arr, 0, arraySize - 1, arraySize, 'A', 'L'); // wywolanie funkcji sortujacej - pivotem jest pierwszy element
 
 					stop_sort = time(0);
 					elapsed_seconds = stop_sort-start_sort;
@@ -814,8 +692,8 @@ int main()
 					start_sort = time(0);
 					std::cout << "QuikSort DESC start: " << std::ctime(&start_sort) << std::endl;
 
-						QuickSort(main_arr,arraySize,0,total_numbers-1,'D'); // wywolanie funkcji sortujacej - pivotem jest pierwszy element
-						//cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
+						cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
+						QuickSort(main_arr, 0, arraySize - 1, arraySize, 'D', 'L'); // wywolanie funkcji sortujacej - pivotem jest pierwszy element
 
 					stop_sort = time(0);
 					elapsed_seconds = stop_sort-start_sort;
@@ -830,7 +708,7 @@ int main()
 					std::cout << "QuikSort Asc start: " << std::ctime(&start_sort) << std::endl;
 
 						cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
-						QuickSort(main_arr,arraySize,arraySize/2,total_numbers-1,'A'); // wywolanie funkcji sortujacej - pivotem jest srodkowy element
+						QuickSort(main_arr, 0, arraySize - 1, arraySize, 'A', 'M'); // wywolanie funkcji sortujacej - pivotem jest srodkowy element
 
 					stop_sort = time(0);
 					elapsed_seconds = stop_sort-start_sort;
@@ -844,8 +722,8 @@ int main()
 					start_sort = time(0);
 					std::cout << "QuikSort DESC start: " << std::ctime(&start_sort) << std::endl;
 
-						QuickSort(main_arr,arraySize,arraySize,total_numbers-1,'D'); // wywolanie funkcji sortujacej - pivotem jest srodkowy element
-						//cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
+                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
+						QuickSort(main_arr, 0, arraySize - 1, arraySize, 'D', 'M'); // wywolanie funkcji sortujacej - pivotem jest srodkowy element
 
 					stop_sort = time(0);
 					elapsed_seconds = stop_sort-start_sort;
@@ -859,8 +737,8 @@ int main()
 					start_sort = time(0);
 					std::cout << "QuikSort Asc start: " << std::ctime(&start_sort) << std::endl;
 
-						QuickSortLE(main_arr,arraySize,0,total_numbers-1,'A'); // wywolanie funkcji sortujacej - pivotem jest ostatni element
-						//cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
+                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
+						QuickSort(main_arr, 0, arraySize - 1, arraySize, 'A', 'R'); // wywolanie funkcji sortujacej - pivotem jest ostatni element
 
 					stop_sort = time(0);
 					elapsed_seconds = stop_sort-start_sort;
@@ -874,8 +752,8 @@ int main()
 					start_sort = time(0);
 					std::cout << "QuikSort DESC start: " << std::ctime(&start_sort) << std::endl;
 
-						QuickSortLE(main_arr,arraySize,0,total_numbers-1,'D'); // wywolanie funkcji sortujacej - pivotem jest ostatni element
-						//cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
+                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
+						QuickSort(main_arr, 0, arraySize - 1, arraySize, 'D', 'R'); // wywolanie funkcji sortujacej - pivotem jest ostatni element
 
 					stop_sort = time(0);
 					elapsed_seconds = stop_sort-start_sort;
@@ -889,8 +767,8 @@ int main()
 					start_sort = time(0);
 					std::cout << "HeapSort Asc start: " << std::ctime(&start_sort) << std::endl;
 
+                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 						heapSort(main_arr,arraySize,'A'); // wywolanie funkcji sortujacej
-						//cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 
 					stop_sort = time(0);
 					elapsed_seconds = stop_sort-start_sort;
@@ -904,8 +782,8 @@ int main()
 					start_sort = time(0);
 					std::cout << "HeapSort Desc start: " << std::ctime(&start_sort) << std::endl;
 
+                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 						heapSort(main_arr,arraySize,'D'); // wywolanie funkcji sortujacej
-						//cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 
 					stop_sort = time(0);
 					elapsed_seconds = stop_sort-start_sort;
@@ -919,8 +797,8 @@ int main()
 					start_sort = time(0);
 					std::cout << "Part MergeSort Asc start: " << std::ctime(&start_sort) << std::endl;
 
+                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 						MergeSortArray(main_arr, arraySize,'A','Y');
-						cout << "main array size: "<<sizeof(main_arr)/sizeof(main_arr[0])<<endl;
 
 					stop_sort = time(0);
 					elapsed_seconds = stop_sort-start_sort;
@@ -934,8 +812,8 @@ int main()
 					start_sort = time(0);
 					std::cout << "Part MergeSort Desc start: " << std::ctime(&start_sort) << std::endl;
 
+                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 						MergeSortArray(main_arr, arraySize,'D','Y');
-						cout << "main array size: "<<sizeof(main_arr)/sizeof(main_arr[0])<<endl;
 
 					stop_sort = time(0);
 					elapsed_seconds = stop_sort-start_sort;
@@ -949,8 +827,8 @@ int main()
 					start_sort = time(0);
 					std::cout << "Part QuickSort Asc start: " << std::ctime(&start_sort) << std::endl;
 
+                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 						PartQuickSort(main_arr, arraySize,'A');
-						cout << "main array size: "<<sizeof(main_arr)/sizeof(main_arr[0])<<endl;
 
 					stop_sort = time(0);
 					elapsed_seconds = stop_sort-start_sort;
@@ -964,8 +842,8 @@ int main()
 					start_sort = time(0);
 					std::cout << "Part QuickSort Desc start: " << std::ctime(&start_sort) << std::endl;
 
+                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 						PartQuickSort(main_arr, arraySize,'D');
-						cout << "main array size: "<<sizeof(main_arr)/sizeof(main_arr[0])<<endl;
 
 					stop_sort = time(0);
 					elapsed_seconds = stop_sort-start_sort;
@@ -980,8 +858,8 @@ int main()
 					start_sort = time(0);
 					std::cout << "Part HeapSort Asc start: " << std::ctime(&start_sort) << std::endl;
 
+                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 						PartHeapSort(main_arr, arraySize,'A');
-						cout << "main array size: "<<sizeof(main_arr)/sizeof(main_arr[0])<<endl;
 
 					stop_sort = time(0);
 					elapsed_seconds = stop_sort-start_sort;
@@ -995,8 +873,8 @@ int main()
 					start_sort = time(0);
 					std::cout << "Part HeapSort Desc start: " << std::ctime(&start_sort) << std::endl;
 
+                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 						PartHeapSort(main_arr, arraySize,'D');
-						cout << "main array size: "<<sizeof(main_arr)/sizeof(main_arr[0])<<endl;
 
 					stop_sort = time(0);
 					elapsed_seconds = stop_sort-start_sort;
@@ -1007,7 +885,6 @@ int main()
 				break;
 
                 case 'W':
-				delete [] main_arr;
 				exit(0);
 				break;
 			default:
@@ -1017,7 +894,6 @@ int main()
 		}
 	} while (v_znak!='W');
 //-------------------------------------------------------------------------------------------
-    delete [] main_arr;
     return 0;
 }
 

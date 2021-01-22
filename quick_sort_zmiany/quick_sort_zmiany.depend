@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1610915477 source:c:\users\artur\documents\wsm_repo\algorytmy_i_zlozonosc\quick_sort_zmiany\main.cpp
+	<cstdlib>
+	<bits/stdc++.h>
+	<iostream>
+	<string>
+	<stdio.h>
+	<time.h>
+	<windows.h>
+	<conio.h>
+

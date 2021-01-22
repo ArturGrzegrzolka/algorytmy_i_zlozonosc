@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1610386566 source:c:\users\artur\documents\wsm_repo\algorytmy_i_zlozonosc\quicksort\main.cpp
+1611261563 source:c:\users\artur\documents\wsm_repo\algorytmy_i_zlozonosc\quicksort\main.cpp
 	<bits/stdc++.h>
 	<iostream>
 	<string>
@@ -7,4 +7,5 @@
 	<time.h>
 	<windows.h>
 	<conio.h>
+	<unistd.h>
 
