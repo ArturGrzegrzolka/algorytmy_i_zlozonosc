@@ -7,19 +7,20 @@
 #include <windows.h>
 #include <conio.h>
 #include <unistd.h>
+#include <chrono>
 
 using namespace std;
 
-// Get current date/time, format is YYYY-MM-DD.HH:mm:ss
-const std::string currentDateTime() {
-    time_t     now = time(0);
-    struct tm  tstruct;
-    char       buf[80];
-    tstruct = *localtime(&now);
-    // Visit http://en.cppreference.com/w/cpp/chrono/c/strftime
-    // for more information about date/time format
-    strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
-    return buf;
+void f_current_time(string sorting_type, string par1)
+{
+    time_t curr_time;
+	curr_time = time(NULL);
+
+	char *tm = ctime(&curr_time);
+	if (par1=="Start" )
+        {cout << sorting_type << " start : " << tm; }
+    else
+        {cout << sorting_type << " stop : " << tm; }
 }
 
 //-------------------------------------------------------------------------------------------
@@ -82,7 +83,6 @@ void MergeAsc(int *arr, int left, int m, int right)
                 j++;
             }
         k++;
-        usleep(1);
     }
     // Copy the remaining elements of
     // L[], if there are any
@@ -97,7 +97,6 @@ void MergeAsc(int *arr, int left, int m, int right)
         arr[k] = R[j];
         j++;
         k++;
-        usleep(1);
     }
 }
 //-------------------------------------------------------------------------------------------
@@ -114,22 +113,18 @@ void MergeDesc(int *arr, int low, int mid, int high )
         {
             temp[k++]=arr[j++];
         }
-    usleep(1);
 	}
 	while(i<=mid)
 	    {
 	        temp[k++]=arr[i++];
-            usleep(1);
 	    }
 	while(j<=high)
 	    {
 	        temp[k++]=arr[j++];
-            usleep(1);
 	    }
 	for(i=low;i<=high;i++)
 	{
 	    arr[i]=temp[i-low];
-        usleep(1);
 	}
 	return;
 }
@@ -140,8 +135,7 @@ void MergeDesc(int *arr, int low, int mid, int high )
 void MergeSort(int *arr ,int left,int right, char direction)
 {
     if(left>=right)
-	{	return;//returns recursively
-    }
+	{	return; } //returns recursively
 
     int mid = left+(right-left)/2;
     if (direction == 'A')
@@ -166,12 +160,15 @@ void MergeSortArray(int *local_arr, int localarraySize, char direction, char par
 	time_t start_petla = time(0);
 	time_t stop_petla = time(0);
 
+    if (partsort =='N')
+    {	for (i=0; i<localarraySize; i++)
+		{temp_array[i] = *local_arr; local_arr++;	}
+    };
+
 	cout << "MergeSort temporary size : "<<sizeof(temp_array)/sizeof(temp_array[0]) <<endl;
 
 	if (direction == 'A' && partsort =='N')
-    {
-		for (i=0; i<localarraySize; i++)
-		{temp_array[i] = *local_arr; local_arr++;	}
+    {   //cout << "MergeSort array size : "<<localarraySize <<endl;
 
 		MergeSort(temp_array, 0, localarraySize-1,'A');
 		cout << "MergeSort array size : "<<localarraySize <<endl;
@@ -179,9 +176,7 @@ void MergeSortArray(int *local_arr, int localarraySize, char direction, char par
 		//printArray(temp_array, localarraySize );
 	}
 	else if (direction == 'D' && partsort =='N')
-    {
-		for (i=0; i<localarraySize; i++)
-		{temp_array[i] = *local_arr; local_arr++;	}
+    {	//cout << "MergeSort array size : "<<localarraySize <<endl;
 
 		MergeSort(temp_array, 0, localarraySize-1,'D');
 		cout << "MergeSort array size : "<<localarraySize <<endl;
@@ -210,6 +205,7 @@ void MergeSortArray(int *local_arr, int localarraySize, char direction, char par
 					{	temp_part_array[i] = local_arr[start_with]; start_with++; }
                     std::cout << "zaczynam od : "<< start_with << " elementu tj :" << temp_array[start_with]<< std::endl;
 
+                    //cout << "MergeSort array size : "<<localarraySize <<endl;
 					MergeSort(temp_part_array, 0, temp_part_arraySize-1,'A');
                     cout << "MergeSort array size : "<<localarraySize <<endl;
 
@@ -275,7 +271,6 @@ int partition(int *arr, int low, int high, char direction)
                 // smaller element
                 i++;
                 swap(arr[i], arr[j]);
-                usleep(1);
             }
         }
         swap(arr[i + 1], arr[high]);
@@ -290,7 +285,6 @@ int partition(int *arr, int low, int high, char direction)
                 // highest element
                 i++;
                 swap(arr[i], arr[j]);
-                usleep(1);
             }
         }
         swap(arr[i + 1], arr[high]);
@@ -459,7 +453,6 @@ void heapify(int *arr, int n, int i, char direction)
         {   swap(arr[i], arr[largest]);
             // Recursively heapify the affected sub-tree
             heapify(arr, n, largest,direction);
-            usleep(1);
         }
     }
     else
@@ -475,7 +468,6 @@ void heapify(int *arr, int n, int i, char direction)
         {   swap(arr[i], arr[smallest]);
             // Recursively heapify the affected sub-tree
             heapify(arr, n, smallest,direction);
-            usleep(1);
         }
     }
 }
@@ -586,7 +578,7 @@ void PartHeapSort(int *tab, int arraySize, char direction)
 // main program
 int main()
 { 	char v_znak;
-	int total_numbers =160000;
+	int total_numbers =220000;
 	int main_arr[total_numbers];
 
 	//int total_numbers =10;
@@ -605,13 +597,15 @@ int main()
 	cout <<"Program start\n";
 
 	int arraySize = sizeof(main_arr)/sizeof(main_arr[0]);
-	time_t start_sort = time(0);
-	time_t stop_sort = time(0);
-	double elapsed_seconds; // = stop_sort-start_sort;
+
+	double elapsed_seconds;
+	auto start_sort = chrono::system_clock::now();
+	auto stop_sort  = chrono::system_clock::now();
+	auto t_c        = std::chrono::system_clock::to_time_t(start_sort);
 
 	for (int i=0; i<total_numbers; i++)
 	{
-	    main_arr[i] = rand() % 500000 + 100;
+	    main_arr[i] = rand();
 	    //cout << main_arr[i] << " ";
 	}
 
@@ -644,242 +638,242 @@ int main()
 		switch (v_znak)
 		{   case '1':
 				//-------------------------------------------------------------------------------------------
-					start_sort = time(0);
-					std::cout << "MergeSort ASC start: " << std::ctime(&start_sort) << std::endl;
+					start_sort  = chrono::system_clock::now();
+					f_current_time("MergeSort ASC ", "Start");
 
-						cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
-						MergeSortArray(main_arr, arraySize,'A','N');
+                    MergeSortArray(main_arr, arraySize,'A','N');
+                    cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 
-					stop_sort = time(0);
-					elapsed_seconds = stop_sort-start_sort;
-				    std::cout << "MergeSort ASC end: " << std::ctime(&stop_sort)<< std::endl;
-				    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
+					stop_sort = chrono::system_clock::now();
+				    f_current_time("MergeSort ASC ", "Stop");
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
+
 					getch();
 				system("cls");
 				break;
 			case '2':
 				//-------------------------------------------------------------------------------------------
-					start_sort = time(0);
-					std::cout << "MergeSort DESC start: " << std::ctime(&start_sort) << std::endl;
+					start_sort  = chrono::system_clock::now();
+					f_current_time( "MergeSort DESC start: ", "Start");
 
-                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
-						MergeSortArray(main_arr, arraySize,'D','N');
+                    MergeSortArray(main_arr, arraySize,'D','N');
+                    cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 
-					stop_sort = time(0);
-					elapsed_seconds = stop_sort-start_sort;
-				    std::cout << "MergeSort DESC end: " << std::ctime(&stop_sort)<< std::endl;
-				    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
+					stop_sort = chrono::system_clock::now();
+				    f_current_time("MergeSort DESC ", "Stop");
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
+
 					getch();
 				system("cls");
 				break;
 			case '3':
 				//-------------------------------------------------------------------------------------------
-					start_sort = time(0);
-					std::cout << "QuikSort Asc start: " << std::ctime(&start_sort) << std::endl;
+					start_sort  = chrono::system_clock::now();
+					f_current_time( "QuikSort Asc start: ", "Start");
 
-						cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
-						QuickSort(main_arr, 0, arraySize - 1, arraySize, 'A', 'L'); // wywolanie funkcji sortujacej - pivotem jest pierwszy element
+					QuickSort(main_arr, 0, arraySize - 1, arraySize, 'A', 'L'); // wywolanie funkcji sortujacej - pivotem jest pierwszy element
+                    cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 
-					stop_sort = time(0);
-					elapsed_seconds = stop_sort-start_sort;
-				    std::cout << "QuikSort Asc end: " << std::ctime(&stop_sort)<< std::endl;
-				    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
+					stop_sort = chrono::system_clock::now();
+				    f_current_time("QuikSort Asc ", "Stop");
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
+
 					getch();
 				system("cls");
 				break;
             case '4':
 				//-------------------------------------------------------------------------------------------
-					start_sort = time(0);
-					std::cout << "QuikSort DESC start: " << std::ctime(&start_sort) << std::endl;
+					start_sort  = chrono::system_clock::now();
+					f_current_time( "QuikSort DESC start: ", "Start");
 
-						cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
-						QuickSort(main_arr, 0, arraySize - 1, arraySize, 'D', 'L'); // wywolanie funkcji sortujacej - pivotem jest pierwszy element
+					QuickSort(main_arr, 0, arraySize - 1, arraySize, 'D', 'L'); // wywolanie funkcji sortujacej - pivotem jest pierwszy element
+					cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 
-					stop_sort = time(0);
-					elapsed_seconds = stop_sort-start_sort;
-				    std::cout << "QuikSort DESC end: " << std::ctime(&stop_sort)<< std::endl;
-				    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
+					stop_sort = chrono::system_clock::now();
+				    f_current_time("QuikSort DESC ", "Stop");
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
+
 					getch();
 				system("cls");
 				break;
 			case '5':
 				//-------------------------------------------------------------------------------------------
-					start_sort = time(0);
-					std::cout << "QuikSort Asc start: " << std::ctime(&start_sort) << std::endl;
+					start_sort  = chrono::system_clock::now();
+					f_current_time( "QuikSort Asc start: ", "Start");
 
-						cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
-						QuickSort(main_arr, 0, arraySize - 1, arraySize, 'A', 'M'); // wywolanie funkcji sortujacej - pivotem jest srodkowy element
+					QuickSort(main_arr, 0, arraySize - 1, arraySize, 'A', 'M'); // wywolanie funkcji sortujacej - pivotem jest srodkowy element
+                    cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 
-					stop_sort = time(0);
-					elapsed_seconds = stop_sort-start_sort;
-				    std::cout << "QuikSort Asc end: " << std::ctime(&stop_sort)<< std::endl;
-				    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
+					stop_sort = chrono::system_clock::now();
+				    f_current_time("QuikSort Asc ", "Stop");
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
+
 					getch();
 				system("cls");
 				break;
             case '6':
 				//-------------------------------------------------------------------------------------------
-					start_sort = time(0);
-					std::cout << "QuikSort DESC start: " << std::ctime(&start_sort) << std::endl;
+					start_sort  = chrono::system_clock::now();
+					f_current_time( "QuikSort DESC start: ", "Start");
 
-                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
-						QuickSort(main_arr, 0, arraySize - 1, arraySize, 'D', 'M'); // wywolanie funkcji sortujacej - pivotem jest srodkowy element
+                    QuickSort(main_arr, 0, arraySize - 1, arraySize, 'D', 'M'); // wywolanie funkcji sortujacej - pivotem jest srodkowy element
+                    cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 
-					stop_sort = time(0);
-					elapsed_seconds = stop_sort-start_sort;
-				    std::cout << "QuikSort DESC end: " << std::ctime(&stop_sort)<< std::endl;
-				    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
+					stop_sort = chrono::system_clock::now();
+				    f_current_time("QuikSort DESC ", "Stop");
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
+
 					getch();
 				system("cls");
 				break;
 			case '7':
 				//-------------------------------------------------------------------------------------------
-					start_sort = time(0);
-					std::cout << "QuikSort Asc start: " << std::ctime(&start_sort) << std::endl;
+					start_sort  = chrono::system_clock::now();
+					f_current_time( "QuikSort Asc start: ", "Start");
 
-                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
-						QuickSort(main_arr, 0, arraySize - 1, arraySize, 'A', 'R'); // wywolanie funkcji sortujacej - pivotem jest ostatni element
+                    QuickSort(main_arr, 0, arraySize - 1, arraySize, 'A', 'R'); // wywolanie funkcji sortujacej - pivotem jest ostatni element
+                    cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 
-					stop_sort = time(0);
-					elapsed_seconds = stop_sort-start_sort;
-				    std::cout << "QuikSort Asc end: " << std::ctime(&stop_sort)<< std::endl;
-				    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
+					stop_sort = chrono::system_clock::now();
+				    f_current_time("QuikSort Asc ", "Stop");
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
+
 					getch();
 				system("cls");
 				break;
             case '8':
 				//-------------------------------------------------------------------------------------------
-					start_sort = time(0);
-					std::cout << "QuikSort DESC start: " << std::ctime(&start_sort) << std::endl;
+					start_sort  = chrono::system_clock::now();
+					f_current_time( "QuikSort DESC start: ", "Start");
 
-                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
-						QuickSort(main_arr, 0, arraySize - 1, arraySize, 'D', 'R'); // wywolanie funkcji sortujacej - pivotem jest ostatni element
+                    QuickSort(main_arr, 0, arraySize - 1, arraySize, 'D', 'R'); // wywolanie funkcji sortujacej - pivotem jest ostatni element
+                    cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 
-					stop_sort = time(0);
-					elapsed_seconds = stop_sort-start_sort;
-				    std::cout << "QuikSort DESC end: " << std::ctime(&stop_sort)<< std::endl;
-				    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
+					stop_sort = chrono::system_clock::now();
+				    f_current_time("QuikSort DESC ", "Stop");
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
+
 					getch();
 				system("cls");
 				break;
             case '9':
 				//-------------------------------------------------------------------------------------------
-					start_sort = time(0);
-					std::cout << "HeapSort Asc start: " << std::ctime(&start_sort) << std::endl;
+					start_sort  = chrono::system_clock::now();
+					f_current_time( "HeapSort Asc ", "Start");
 
-                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
-						heapSort(main_arr,arraySize,'A'); // wywolanie funkcji sortujacej
+                    heapSort(main_arr,arraySize,'A'); // wywolanie funkcji sortujacej
+                    cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 
-					stop_sort = time(0);
-					elapsed_seconds = stop_sort-start_sort;
-				    std::cout << "HeapSort Asc end: " << std::ctime(&stop_sort)<< std::endl;
-				    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
+					stop_sort = chrono::system_clock::now();
+				    f_current_time("HeapSort Asc ", "Stop");
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
+
 					getch();
 				system("cls");
 				break;
             case '0':
 				//-------------------------------------------------------------------------------------------
-					start_sort = time(0);
-					std::cout << "HeapSort Desc start: " << std::ctime(&start_sort) << std::endl;
+					start_sort  = chrono::system_clock::now();
+					f_current_time( "HeapSort Desc ", "Start");
 
-                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
-						heapSort(main_arr,arraySize,'D'); // wywolanie funkcji sortujacej
+                    heapSort(main_arr,arraySize,'D'); // wywolanie funkcji sortujacej
+                    cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 
-					stop_sort = time(0);
-					elapsed_seconds = stop_sort-start_sort;
-				    std::cout << "HeapSort Desc end: " << std::ctime(&stop_sort)<< std::endl;
-				    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
+					stop_sort = chrono::system_clock::now();
+				    f_current_time("HeapSort Desc ", "Stop");
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
+
 					getch();
 				system("cls");
 				break;
 			case 'A':
 				//-------------------------------------------------------------------------------------------
-					start_sort = time(0);
-					std::cout << "Part MergeSort Asc start: " << std::ctime(&start_sort) << std::endl;
+					start_sort  = chrono::system_clock::now();
+					f_current_time( "Part MergeSort Asc ", "Start");
 
-                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
-						MergeSortArray(main_arr, arraySize,'A','Y');
+                    MergeSortArray(main_arr, arraySize,'A','Y');
+                    cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 
-					stop_sort = time(0);
-					elapsed_seconds = stop_sort-start_sort;
-				    std::cout << "Part MergeSort Asc end: " << std::ctime(&stop_sort)<< std::endl;
-				    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
+					stop_sort = chrono::system_clock::now();
+				    f_current_time("Part MergeSort ", "Stop");
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
+
 					getch();
 				system("cls");
 				break;
 			case 'B':
 				//-------------------------------------------------------------------------------------------
-					start_sort = time(0);
-					std::cout << "Part MergeSort Desc start: " << std::ctime(&start_sort) << std::endl;
+					start_sort  = chrono::system_clock::now();
+					f_current_time( "Part MergeSort Desc ", "Start");
 
-                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
-						MergeSortArray(main_arr, arraySize,'D','Y');
+                    MergeSortArray(main_arr, arraySize,'D','Y');
+                    cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 
-					stop_sort = time(0);
-					elapsed_seconds = stop_sort-start_sort;
-				    std::cout << "Part MergeSort Desc end: " << std::ctime(&stop_sort)<< std::endl;
-				    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
+					stop_sort = chrono::system_clock::now();
+				    f_current_time("Part MergeSort Desc ", "Stop");
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
+
 					getch();
 				system("cls");
 				break;
 			case 'C':
 				//-------------------------------------------------------------------------------------------
-					start_sort = time(0);
-					std::cout << "Part QuickSort Asc start: " << std::ctime(&start_sort) << std::endl;
+					start_sort  = chrono::system_clock::now();
+					f_current_time( "Part QuickSort Asc ", "Start");
 
-                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
-						PartQuickSort(main_arr, arraySize,'A');
+                    PartQuickSort(main_arr, arraySize,'A');
+                    cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 
-					stop_sort = time(0);
-					elapsed_seconds = stop_sort-start_sort;
-				    std::cout << "Part QuickSort Asc end: " << std::ctime(&stop_sort)<< std::endl;
-				    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
+                    stop_sort = chrono::system_clock::now();
+				    f_current_time("Part QuickSort Asc ", "Stop");
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
+
 					getch();
 				system("cls");
 				break;
 			case 'D':
 				//-------------------------------------------------------------------------------------------
-					start_sort = time(0);
-					std::cout << "Part QuickSort Desc start: " << std::ctime(&start_sort) << std::endl;
+					start_sort  = chrono::system_clock::now();
+					f_current_time( "Part QuickSort Desc ", "Start");
 
-                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
-						PartQuickSort(main_arr, arraySize,'D');
+                    cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
+                    PartQuickSort(main_arr, arraySize,'D');
 
-					stop_sort = time(0);
-					elapsed_seconds = stop_sort-start_sort;
-				    std::cout << "Part QuickSort Desc end: " << std::ctime(&stop_sort)<< std::endl;
-				    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
+                    stop_sort = chrono::system_clock::now();
+				    f_current_time("Part QuickSort Desc ", "Stop");
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
+
 					getch();
 				system("cls");
 				break;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			case 'E':
 				//-------------------------------------------------------------------------------------------
-					start_sort = time(0);
-					std::cout << "Part HeapSort Asc start: " << std::ctime(&start_sort) << std::endl;
+					start_sort  = chrono::system_clock::now();
+					f_current_time( "Part HeapSort Asc ", "Start");
 
-                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
-						PartHeapSort(main_arr, arraySize,'A');
+                    PartHeapSort(main_arr, arraySize,'A');
+                    cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 
-					stop_sort = time(0);
-					elapsed_seconds = stop_sort-start_sort;
-				    std::cout << "Part HeapSort Asc end: " << std::ctime(&stop_sort)<< std::endl;
-				    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
+                    stop_sort = chrono::system_clock::now();
+				    f_current_time("Part HeapSort Asc ", "Stop");
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
+
 					getch();
 				system("cls");
 				break;
 			case 'F':
 				//-------------------------------------------------------------------------------------------
-					start_sort = time(0);
-					std::cout << "Part HeapSort Desc start: " << std::ctime(&start_sort) << std::endl;
+					start_sort  = chrono::system_clock::now();
+					f_current_time( "Part HeapSort Desc ", "Start");
 
-                        cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
-						PartHeapSort(main_arr, arraySize,'D');
+					PartHeapSort(main_arr, arraySize,'D');
+                    cout << "main array size: "<< sizeof(main_arr)/sizeof(main_arr[0]) << endl;
 
-					stop_sort = time(0);
-					elapsed_seconds = stop_sort-start_sort;
-				    std::cout << "Part HeapSort Desc end: " << std::ctime(&stop_sort)<< std::endl;
-				    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
+                    stop_sort = chrono::system_clock::now();
+				    f_current_time("Part HeapSort Desc ", "Stop");
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
+
 					getch();
 				system("cls");
 				break;
