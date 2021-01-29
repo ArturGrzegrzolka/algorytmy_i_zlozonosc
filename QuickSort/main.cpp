@@ -157,8 +157,9 @@ void MergeSortArray(int *local_arr, int localarraySize, char direction, char par
 	int temp_part_arraySize = localarraySize/5;
 	int temp_part_array[temp_part_arraySize];
 	double elapsed_seconds;
-	time_t start_petla = time(0);
-	time_t stop_petla = time(0);
+	auto start_sort = chrono::system_clock::now();
+	auto stop_sort  = chrono::system_clock::now();
+	auto t_c        = std::chrono::system_clock::to_time_t(start_sort);
 
     if (partsort =='N')
     {	for (i=0; i<localarraySize; i++)
@@ -192,8 +193,8 @@ void MergeSortArray(int *local_arr, int localarraySize, char direction, char par
 			cout << "odcinek_pom: "<< odcinek_pom << std::endl;
 			for (petla =0; petla<5; petla++)
 			{
-				start_petla = time(0);
-				std::cout << "Selection sort start: " << std::ctime(&start_petla) << std::endl;
+                start_sort  = chrono::system_clock::now();
+                f_current_time("PartMergeSort ASC ", "Start");
 
 					if (odcinek_pom == 0) { start_with=0;} else { start_with = temp_part_arraySize*odcinek_pom;}
 					cout << "petla: "<< petla+1 << std::endl;
@@ -209,10 +210,9 @@ void MergeSortArray(int *local_arr, int localarraySize, char direction, char par
 					MergeSort(temp_part_array, 0, temp_part_arraySize-1,'A');
                     cout << "MergeSort array size : "<<localarraySize <<endl;
 
-				stop_petla = time(0);
-				elapsed_seconds = stop_petla-start_petla;
-			    std::cout << "Selection sort end: " << std::ctime(&stop_petla)<< std::endl;
-			    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
+					stop_sort = chrono::system_clock::now();
+				    f_current_time("PartMergeSort Asc ", "Stop");
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
 			}
 			//cout << "MergeSort array: ";
 			//printArray(temp_part_array, temp_part_arraySize );
@@ -227,9 +227,8 @@ void MergeSortArray(int *local_arr, int localarraySize, char direction, char par
 			cout << "odcinek_pom: "<< odcinek_pom << std::endl;
 			for (petla =0; petla<5; petla++)
 			{
-				start_petla = time(0);
-				std::cout << "Selection sort start: " << std::ctime(&start_petla) << std::endl;
-
+                start_sort  = chrono::system_clock::now();
+                f_current_time("MergeSort Desc ", "Start");
 					if (odcinek_pom == 0) { start_with=0;} else { start_with = temp_part_arraySize*odcinek_pom;}
 					cout << "petla: "<< petla+1 << std::endl;
 					cout << "start_with: "<< start_with << std::endl;
@@ -242,10 +241,10 @@ void MergeSortArray(int *local_arr, int localarraySize, char direction, char par
 					MergeSort(temp_part_array, 0, temp_part_arraySize-1,'D');
                     cout << "MergeSort array size : "<<localarraySize <<endl;
 
-				stop_petla = time(0);
-				elapsed_seconds = stop_petla-start_petla;
-			    std::cout << "Selection sort end: " << std::ctime(&stop_petla)<< std::endl;
-			    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
+					stop_sort = chrono::system_clock::now();
+				    f_current_time("PartMergeSort Desc ", "Stop");
+				    std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
+
 			}
 			//cout << "MergeSort array: ";
 			//printArray(temp_part_array, temp_part_arraySize );
@@ -353,8 +352,9 @@ void PartQuickSort(int *tab, int arraySize, char direction)
 	int temp_part_arraySize = ceil(arraySize/5);
 	int temp_part_array[temp_part_arraySize];
 	double elapsed_seconds;
-	time_t start_petla = time(0);
-	time_t stop_petla = time(0);
+	auto start_sort = chrono::system_clock::now();
+	auto stop_sort  = chrono::system_clock::now();
+	auto t_c        = std::chrono::system_clock::to_time_t(start_sort);
 
 //    for (int i=0; i<arraySize; i++)
 //    {temp_array[i] = *tab; tab++;	}
@@ -375,8 +375,8 @@ void PartQuickSort(int *tab, int arraySize, char direction)
 			cout << "odcinek_pom: "<< odcinek_pom << std::endl;
 			for (petla =0; petla<5; petla++)
 			{
-				start_petla = time(0);
-				std::cout << "PartQuickSort start: " << std::ctime(&start_petla) << std::endl;
+                start_sort  = chrono::system_clock::now();
+                f_current_time("PartQuickSort ASC ", "Start");
 
 					if (odcinek_pom == 0) { start_with=0;} else { start_with = temp_part_arraySize*odcinek_pom;}
 					cout << "petla: "<< petla+1 << std::endl;
@@ -389,10 +389,10 @@ void PartQuickSort(int *tab, int arraySize, char direction)
 
                     QuickSortUnified (temp_part_array, 0, temp_part_arraySize ,'R', 'A');
 
-				stop_petla = time(0);
-				elapsed_seconds = stop_petla-start_petla;
-			    std::cout << "PartQuickSort end: " << std::ctime(&stop_petla)<< std::endl;
-			    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
+                stop_sort = chrono::system_clock::now();
+                f_current_time("PartQuickSort Asc ", "Stop");
+                std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
+
 			}
 		}
 	}
@@ -405,8 +405,8 @@ void PartQuickSort(int *tab, int arraySize, char direction)
 			cout << "odcinek_pom: "<< odcinek_pom << std::endl;
 			for (petla =0; petla<5; petla++)
 			{
-				start_petla = time(0);
-				std::cout << "PartQuickSort start: " << std::ctime(&start_petla) << std::endl;
+                start_sort  = chrono::system_clock::now();
+                f_current_time("PartQuickSort Desc ", "Start");
 
 					if (odcinek_pom == 0) { start_with=0;} else { start_with = temp_part_arraySize*odcinek_pom;}
 					cout << "petla: "<< petla+1 << std::endl;
@@ -419,10 +419,10 @@ void PartQuickSort(int *tab, int arraySize, char direction)
 
                     QuickSortUnified (temp_part_array, 0, temp_part_arraySize, 'R', 'D');
 
-				stop_petla = time(0);
-				elapsed_seconds = stop_petla-start_petla;
-			    std::cout << "PartQuickSort end: " << std::ctime(&stop_petla)<< std::endl;
-			    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
+                stop_sort = chrono::system_clock::now();
+                f_current_time("PartQuickSort Desc ", "Stop");
+                std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
+
 			}
 	    }
 	}
@@ -497,8 +497,9 @@ void PartHeapSort(int *tab, int arraySize, char direction)
 	int temp_part_arraySize = arraySize/5;
 	int temp_part_array[temp_part_arraySize];
 	double elapsed_seconds;
-	time_t start_petla = time(0);
-	time_t stop_petla = time(0);
+	auto start_sort = chrono::system_clock::now();
+	auto stop_sort  = chrono::system_clock::now();
+	auto t_c        = std::chrono::system_clock::to_time_t(start_sort);
 
 //    for (int i=0; i<arraySize; i++)
 //    {temp_array[i] = *tab; tab++;	}
@@ -519,8 +520,8 @@ void PartHeapSort(int *tab, int arraySize, char direction)
 			cout << "odcinek_pom: "<< odcinek_pom << std::endl;
 			for (petla =0; petla<5; petla++)
 			{
-				start_petla = time(0);
-				std::cout << "HeapSort Asc start: " << std::ctime(&start_petla) << std::endl;
+                start_sort  = chrono::system_clock::now();
+                f_current_time("PartHeapSort ASC ", "Start");
 
 					if (odcinek_pom == 0) { start_with=0;} else { start_with = temp_part_arraySize*odcinek_pom;}
 					cout << "petla: "<< petla+1 << std::endl;
@@ -533,10 +534,10 @@ void PartHeapSort(int *tab, int arraySize, char direction)
 
                     heapSort (temp_part_array, temp_part_arraySize ,'A');
 
-				stop_petla = time(0);
-				elapsed_seconds = stop_petla-start_petla;
-			    std::cout << "HeapSort Asc end: " << std::ctime(&stop_petla)<< std::endl;
-			    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
+                stop_sort = chrono::system_clock::now();
+                f_current_time("PartHeapSort Asc ", "Stop");
+                std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
+
 			}
 		}
 	}
@@ -549,8 +550,8 @@ void PartHeapSort(int *tab, int arraySize, char direction)
 			cout << "odcinek_pom: "<< odcinek_pom << std::endl;
 			for (petla =0; petla<5; petla++)
 			{
-				start_petla = time(0);
-				std::cout << "HeapSort Desc start: " << std::ctime(&start_petla) << std::endl;
+                start_sort  = chrono::system_clock::now();
+                f_current_time("PartHeapSort Desc ", "Start");
 
 					if (odcinek_pom == 0) { start_with=0;} else { start_with = temp_part_arraySize*odcinek_pom;}
 					cout << "petla: "<< petla+1 << std::endl;
@@ -563,22 +564,23 @@ void PartHeapSort(int *tab, int arraySize, char direction)
 
                     heapSort (temp_part_array, temp_part_arraySize, 'D');
 
-				stop_petla = time(0);
-				elapsed_seconds = stop_petla-start_petla;
-			    std::cout << "HeapSort Desc end: " << std::ctime(&stop_petla)<< std::endl;
-			    std::cout << "elapsed time: " << elapsed_seconds << "s\n"<< std::endl;
+                stop_sort = chrono::system_clock::now();
+                f_current_time("PartHeapSort Desc ", "Stop");
+                std::cout << "elapsed time: " << std::chrono::duration_cast<std::chrono::milliseconds>(stop_sort - start_sort).count() << "ms\n"<< std::endl;
+
 			}
 	    }
 	}
-    cout << "HeapSort array after: ";
-    printArray(temp_part_array, temp_part_arraySize );
+    //cout << "HeapSort array after: ";
+    //printArray(temp_part_array, temp_part_arraySize );
     return;
 }
 //-------------------------------------------------------------------------------------------
 // main program
 int main()
 { 	char v_znak;
-	int total_numbers =220000;
+	int total_numbers =40000000;
+	//int total_numbers =160000;
 	int main_arr[total_numbers];
 
 	//int total_numbers =10;
